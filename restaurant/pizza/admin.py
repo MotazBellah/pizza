@@ -1,3 +1,8 @@
 from django.contrib import admin
-
+from .models import Type, Menu, Size, Topping
 # Register your models here.
+
+admin.site.register(Type)
+admin.site.register(Menu)
+admin.site.register(Size)
+admin.site.register(Topping)
