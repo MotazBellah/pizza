@@ -26,7 +26,7 @@ class Size(models.Model):
 
 
 class Topping(models.Model):
-    item = models.FloatField(default=0.0)
+    item = models.CharField(max_length=64)
     menu = models.ManyToManyField(Menu, blank=True, related_name='passengers')
 
     def __str__(self):
