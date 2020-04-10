@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import Size
+from .models import Size, Topping
 
 # Create your views here.
 def index(request):
@@ -20,7 +20,8 @@ def index(request):
     for i in menu.items():
         print(i)
     context = {
-        'items': menu.items()
+        'items': menu.items(),
+        'toppings': Topping.objects.all()
     }
 
     return render(request, "pizza/index.html", context)
