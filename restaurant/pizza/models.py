@@ -13,16 +13,16 @@ class Menu(models.Model):
     type = models.ForeignKey(Type, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.id} - {self.item} ({self.type})"
+        return f"{self.type}, {self.item}"
 
 
 class Size(models.Model):
     small = models.FloatField(default=0.0)
     large = models.FloatField(default=0.0)
-    menu = models.ForeignKey(Type, on_delete=models.CASCADE)
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.small} {self.large}"
+        return f"{self.menu}, {self.small}, {self.large}"
 
 
 class Topping(models.Model):
@@ -30,4 +30,4 @@ class Topping(models.Model):
     menu = models.ManyToManyField(Menu, blank=True, related_name='passengers')
 
     def __str__(self):
-        return f"{self.item}"
+        return f"{self.item}, {self.menu}"
