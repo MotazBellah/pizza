@@ -4,13 +4,19 @@
 
 {% block body %}
     <h1>Pizza</h1>
-    <ul>
+    <div id="menu">
         {% for item in items %}
+        <ul>
             <h1>{{item.0}}</h1>
             {% for i in item.1 %}
-                <p>{{i.0}}  {{i.1}}  {{i.2}}</p>
+                <li>
+                    {{i.0}}
+                    <input class="price" type="checkbox" name="checkbox" value="{{i.1}}">{{i.1}}
+                    <input class="price" type="checkbox" name="checkbox" value="{{i.2}}">{{i.2}}
+                </li>
             {% endfor %}
+        </ul>
 
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}
