@@ -9,11 +9,12 @@
         <a href="{% url 'signin' %}">Login</a>
         <a href="{% url 'signout' %}">Logout</a>
 
-            {% for item in shopping %}
+            {% for item in food %}
             <ul>
-                <li>{{ item }}</li>
+                <li><span>{{ item.0 }}</span>  <span>{{ item.1 }}</span></li>
             </ul>
             {% endfor %}
+            <p>Total price is {{ price }}</p>
 
     </div>
 {% endblock %}

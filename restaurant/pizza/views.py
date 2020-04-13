@@ -52,9 +52,12 @@ def foodOrder(request):
 def carts(request):
     if not request.user.is_authenticated:
         return render(request, "pizza/login.html", {"message":None})
-
+    shopping = Order.objects.all()
+    total_price = shopping[0].price
+    food = [i.item.split(',') for i in shopping]
     context = {
-        'shopping': Order.objects.all(),
+        'food': food,
+        'price': total_price
     }
     return render(request, "pizza/cart.html", context)
 
