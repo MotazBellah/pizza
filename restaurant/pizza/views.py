@@ -44,7 +44,7 @@ def foodOrder(request):
             food_price = list(zip(items, prices))
             for i in food_price:
                 j = i[0] + ',' + i[1]
-                cart = Order(item=j, user=current_user, price=total)
+                cart = Order(item=i[0], user=current_user, price=i[1])
                 cart.save()
         return HttpResponseRedirect(reverse("index"))
 
@@ -53,13 +53,22 @@ def carts(request):
     if not request.user.is_authenticated:
         return render(request, "pizza/login.html", {"message":None})
     shopping = Order.objects.all()
-    total_price = shopping[0].price
-    food = [i.item.split(',') for i in shopping]
+    total_price = sum(float(i.price) for i in shopping)
+    food = [([i.item, i.price], i.id) for i in shopping]
     context = {
         'food': food,
         'price': total_price
     }
     return render(request, "pizza/cart.html", context)
+
+def delete(request, item_id):
+    if not request.user.is_authenticated:
+        return render(request, "pizza/login.html", {"message":None})
+    delete_order = Order.objects.get(pk=item_id)
+    delete_order.delete()
+
+    return HttpResponseRedirect(reverse("carts"))
+
 
 
 
