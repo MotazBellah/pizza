@@ -1,0 +1,30 @@
+{% extends "pizza/layout.html" %}
+
+{% block title %}Pizza{% endblock %}
+
+{% block body %}
+    <h1>Pizza</h1>
+    <div>
+        <a href="{% url 'register' %}">Register</a>
+        <a href="{% url 'signin' %}">Login</a>
+        {% for item in items %}
+        <ul>
+            <h1>{{item.0}}</h1>
+            {% for i in item.1 %}
+                <li>
+                    <span>{{i.0}}</span>
+                    <span>{{i.1}}</span>
+                    <span>{{i.2}}</span>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+
+        <select>
+            <option value="Select">Select</option>
+            {% for i in toppings %}
+                <option value="{{i.item}}">{{ i.item }}</option>
+            {% endfor %}
+        </select>
+    </div>
+{% endblock %}

@@ -7,7 +7,7 @@ menu.addEventListener('click', (e) => {
     console.log(e.target.value);
     if (e.target.tagName === 'INPUT') {
         if (e.target.checked) {
-            alert(e.target.value);
+            // alert(e.target.value);
             total += parseFloat(e.target.value);
         } else {
             total -= parseFloat(e.target.value);

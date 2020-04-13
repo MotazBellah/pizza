@@ -6,7 +6,10 @@ from django.shortcuts import render
 from .models import Size, Topping
 
 # Create your views here.
+
 def index(request):
+    if not request.user.is_authenticated:
+        return render(request, "pizza/login.html", {"message":None})
     # context = {
     #     'items': [str(i).split(', ') for i in Size.objects.all()]
     # }
@@ -20,7 +23,8 @@ def index(request):
 
     context = {
         'items': menu.items(),
-        'toppings': Topping.objects.all()
+        'toppings': Topping.objects.all(),
+        'user': request.user.is_authenticated
     }
     return render(request, "pizza/index.html", context)
 
@@ -57,5 +61,6 @@ def signin(request):
 
 
 def signout(request):
-    logout(request)
+    if request.user.is_authenticated:
+        logout(request)
     return render(request, "pizza/login.html", {"message": "Logged out."})
