@@ -3,7 +3,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.shortcuts import render
-from .models import Size, Topping
+from .models import Size, Topping, Order
+from django.views.decorators.csrf import csrf_protect
 
 # Create your views here.
 
@@ -27,6 +28,39 @@ def index(request):
         'user': request.user.is_authenticated
     }
     return render(request, "pizza/index.html", context)
+
+
+def foodOrder(request):
+    if request.method == "POST":
+        prices = request.POST.getlist("checkbox")
+        items = request.POST.getlist("food")
+        current_user = request.user
+        # print(request.POST["items"])
+        # items = request.args.get('items')
+        print(prices)
+        print(items)
+        if prices:
+            total = sum(float(i) for i in prices)
+            food_price = list(zip(items, prices))
+            for i in food_price:
+                j = i[0] + ',' + i[1]
+                cart = Order(item=j, user=current_user, price=total)
+                cart.save()
+        return HttpResponseRedirect(reverse("index"))
+
+
+def carts(request):
+    if not request.user.is_authenticated:
+        return render(request, "pizza/login.html", {"message":None})
+
+    context = {
+        'shopping': Order.objects.all(),
+    }
+    return render(request, "pizza/cart.html", context)
+
+
+
+
 
 
 def register(request):

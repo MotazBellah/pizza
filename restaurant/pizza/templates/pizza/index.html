@@ -8,38 +8,46 @@
         <a href="{% url 'register' %}">Register</a>
         <a href="{% url 'signin' %}">Login</a>
         <a href="{% url 'signout' %}">Logout</a>
-        {% for item in items %}
-        <ul>
-            <h1>{{item.0}}</h1>
-            {% for i in item.1 %}
-                <li>
-                    <span>{{i.0}}</span>
-                    <input class="price" type="checkbox" name="checkbox" value="{{i.1}}">{{i.1}}
-                    <input class="price" type="checkbox" name="checkbox" value="{{i.2}}">{{i.2}}
-                    {% if i.0 == '1 topping' %}
-                    <div class="one">
+        <a href="{% url 'carts' %}">Carts</a>
 
-                    </div>
-                    {% elif i.0 == '2 toppings' %}
-                    <div class="two">
+        <form class="" action="{% url 'foodOrder' %}" method="post">
+            {% csrf_token %}
 
-                    </div>
-                    {% elif i.0 == '3 toppings' %}
-                    <div class="three">
+            {% for item in items %}
+            <ul>
+                <h1>{{item.0}}</h1>
+                {% for i in item.1 %}
+                    <li>
+                        <input class="food" type="checkbox" name="food" value="{{i.0}}">
+                        <span>{{i.0}}</span>
+                        <input class="price" type="checkbox" name="checkbox" value="{{i.1}}">{{i.1}}
+                        <input class="price" type="checkbox" name="checkbox" value="{{i.2}}">{{i.2}}
+                        {% if i.0 == '1 topping' %}
+                        <div class="one">
 
-                    </div>
-                    {% endif %}
-                </li>
+                        </div>
+                        {% elif i.0 == '2 toppings' %}
+                        <div class="two">
+
+                        </div>
+                        {% elif i.0 == '3 toppings' %}
+                        <div class="three">
+
+                        </div>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
             {% endfor %}
-        </ul>
-        {% endfor %}
 
-        <select  name="topping">
-            <option value="Select">Select</option>
-            {% for i in toppings %}
-                <option value="{{i.item}}">{{ i.item }}</option>
-            {% endfor %}
-        </select>
+            <select  name="topping">
+                <option value="Select">Select</option>
+                {% for i in toppings %}
+                    <option value="{{i.item}}">{{ i.item }}</option>
+                {% endfor %}
+            </select>
+            <input id='carts' type="submit" value="Order"/>
+        </form>
 
         <div id="selected-toopings">
 

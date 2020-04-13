@@ -1,0 +1,19 @@
+{% extends "pizza/layout.html" %}
+
+{% block title %}Pizza{% endblock %}
+
+{% block body %}
+    <h1>Pizza</h1>
+    <div id="carts">
+        <a href="{% url 'register' %}">Register</a>
+        <a href="{% url 'signin' %}">Login</a>
+        <a href="{% url 'signout' %}">Logout</a>
+
+            {% for item in shopping %}
+            <ul>
+                <li>{{ item }}</li>
+            </ul>
+            {% endfor %}
+
+    </div>
+{% endblock %}
