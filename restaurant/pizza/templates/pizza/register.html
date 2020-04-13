@@ -1,0 +1,20 @@
+{% extends "pizza/layout.html" %}
+
+{% block title %}Pizza - Resister{% endblock %}
+
+{% block body %}
+    <h2>Create your account and order now!</h2>
+    {% if message %}
+        <div>
+            {{ message }}
+        </div>
+    {% endif %}
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <input name="username" type="text" placeholder="username"/>
+        <input name="password" type="password" placeholder="password"/>
+        <input name="password2" type="password" placeholder="confirm password"/>
+        <input name="email" type="email" placeholder="email"/>
+        <input type="submit" value="Register"/>
+    </form>
+{% endblock %}

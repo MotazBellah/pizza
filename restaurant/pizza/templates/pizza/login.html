@@ -1,0 +1,18 @@
+{% extends "pizza/layout.html" %}
+
+{% block title %}Pizza - Login{% endblock %}
+
+{% block body %}
+    <h2>Create your account and order now!</h2>
+    {% if message %}
+        <div>
+            {{ message }}
+        </div>
+    {% endif %}
+    <form action="{% url 'signin' %}" method="post">
+        {% csrf_token %}
+        <input name="username" type="text"/>
+        <input name="password" type="password"/>
+        <input type="submit" value="Login"/>
+    </form>
+{% endblock %}

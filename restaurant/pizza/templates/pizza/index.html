@@ -5,6 +5,9 @@
 {% block body %}
     <h1>Pizza</h1>
     <div id="menu">
+        <a href="{% url 'register' %}">Register</a>
+        <a href="{% url 'signin' %}">Login</a>
+        <a href="{% url 'signout' %}">Logout</a>
         {% for item in items %}
         <ul>
             <h1>{{item.0}}</h1>
