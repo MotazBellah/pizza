@@ -35,9 +35,11 @@ def foodOrder(request):
         prices = request.POST.getlist("checkbox")
         items = request.POST.getlist("food")
         current_user = request.user
+        topping = request.POST.getlist("topping")
+        print(topping)
         # print(request.POST["items"])
         # items = request.args.get('items')
-        print(prices)
+        # print(prices)
         print(items)
         if prices:
             total = sum(float(i) for i in prices)
