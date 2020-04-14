@@ -32,7 +32,7 @@ class Topping(models.Model):
     menu = models.ManyToManyField(Menu, blank=True, related_name='menu')
 
     def __str__(self):
-        return f"{self.item}, {self.menu}"
+        return f"{self.item}"
 
 
 class Order(models.Model):

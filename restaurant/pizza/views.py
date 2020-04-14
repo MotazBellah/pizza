@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.shortcuts import render
-from .models import Size, Topping, Order
+from .models import Size, Topping, Order, Menu
 from django.views.decorators.csrf import csrf_protect
 
 # Create your views here.
@@ -35,19 +35,94 @@ def foodOrder(request):
         prices = request.POST.getlist("checkbox")
         items = request.POST.getlist("food")
         current_user = request.user
-        topping = request.POST.getlist("topping")
-        print(topping)
-        # print(request.POST["items"])
-        # items = request.args.get('items')
-        # print(prices)
-        print(items)
+        topping1 = request.POST.getlist("topping1")
+        topping2 = request.POST.getlist("topping2")
+        topping3 = request.POST.getlist("topping3")
+        item1 = request.POST.getlist("item11")
+        item2 = request.POST.getlist("item2")
+        item3 = request.POST.getlist("item3")
+
+        if topping1:
+            adding_one_topping = Menu.objects.get(item='1 topping')
+            # print(food_menu)
+            one_topping = Topping.objects.get(item=topping1[-1])
+            one_topping.menu.add(adding_one_topping)
+            # print(adds.menu.all())
+            print('ONE')
+            print(adding_one_topping.menu.all())
+
+        if topping2:
+            adding_two_topping = Menu.objects.get(item='2 toppings')
+            # print(food_menu)
+            for i in topping2:
+                adds = Topping.objects.get(item=i)
+                adds.menu.add(adding_two_topping)
+            # print(adds.menu.all())
+            print('TWO')
+            print(adding_two_topping.menu.all())
+
+        if topping3:
+            adding_three_topping = Menu.objects.get(item='3 toppings')
+            # print(food_menu)
+            for i in topping3:
+                adds = Topping.objects.get(item=i)
+                adds.menu.add(adding_three_topping)
+            # print(adds.menu.all())
+            print('THREE')
+            print(adding_three_topping.menu.all())
+
+        if item1:
+            adding_one_item = Menu.objects.get(item='1 item')
+            # print(food_menu)
+            adds = Topping.objects.get(item=item1[-1])
+            adds.menu.add(adding_one_item)
+            # print(adds.menu.all())
+            print(adding_one_item.menu.all())
+
+        if item2:
+            adding_two_item = Menu.objects.get(item='2 items')
+            # print(food_menu)
+            for i in item2:
+                adds = Topping.objects.get(item=i)
+                adds.menu.add(adding_two_item)
+            # print(adds.menu.all())
+            print(adding_two_item.menu.all())
+
+        if item3:
+            adding_three_item = Menu.objects.get(item='3 items')
+            # print(food_menu)
+            for i in item3:
+                adds = Topping.objects.get(item=i)
+                adds.menu.add(adding_three_item)
+            # print(adds.menu.all())
+            print(adding_three_item.menu.all())
+
         if prices:
             total = sum(float(i) for i in prices)
             food_price = list(zip(items, prices))
             for i in food_price:
-                j = i[0] + ',' + i[1]
-                cart = Order(item=i[0], user=current_user, price=i[1])
-                cart.save()
+
+                # print(a.menu.all())
+                if i[0] in ['1 topping', "1 item", '2 toppings', '2 items', '3 toppings', '3 items']:
+                    a = Menu.objects.get(item=i[0])
+                    all = a.menu.all()
+                    s, e = 0, 0
+                    while e < len(all):
+                        if i[0] in ['1 topping', "1 item"]:
+                            s, e = e, e+1
+                        if i[0] in ['2 toppings', '2 items']:
+                            s, e = e, e+2
+                        if i[0] in ['3 toppings', '3 items']:
+                            s, e = e, e+3
+                        z = ", ".join([i.item for i in all[s:e]])
+                        print(z)
+                    y = i[0] + ' ('+ z +')'
+                    cart = Order(item=y, user=current_user, price=i[1])
+                    cart.save()
+                else:
+                    cart = Order(item=i[0], user=current_user, price=i[1])
+                    cart.save()
+
         return HttpResponseRedirect(reverse("index"))
 
 
@@ -57,6 +132,7 @@ def carts(request):
     shopping = Order.objects.all()
     total_price = sum(float(i.price) for i in shopping)
     food = [([i.item, i.price], i.id) for i in shopping]
+
     context = {
         'food': food,
         'price': total_price
@@ -70,11 +146,6 @@ def delete(request, item_id):
     delete_order.delete()
 
     return HttpResponseRedirect(reverse("carts"))
-
-
-
-
-
 
 
 def register(request):
