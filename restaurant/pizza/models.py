@@ -29,7 +29,6 @@ class Size(models.Model):
 
 class Topping(models.Model):
     item = models.CharField(max_length=64)
-    menu = models.ManyToManyField(Menu, blank=True, related_name='menu')
 
     def __str__(self):
         return f"{self.item}"
@@ -39,6 +38,18 @@ class Order(models.Model):
     item = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     price = models.FloatField(default=0.0)
+    topping = models.ManyToManyField(Topping, blank=True, related_name='topping')
 
     def __str__(self):
-        return f"{self.user}, {self.item}, {self.price}"
+        return f"{self.user}, {self.item}, {self.topping}, {self.price}"
+
+
+
+
+class Purchase(models.Model):
+    order = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    price = models.FloatField(default=0.0)
+
+    def __str__(self):
+        return f"{self.user}, {self.order}, {self.price}"
