@@ -105,6 +105,8 @@ def foodOrder(request):
                 # print(a.menu.all())
                 if i[0] in ['1 topping', "1 item", '2 toppings', '2 items', '3 toppings', '3 items']:
                     a = Menu.objects.get(item=i[0])
+                    print('===============')
+                    print(a)
                     all = a.menu.all()
                     s, e = 0, 0
                     while e < len(all):
@@ -116,9 +118,9 @@ def foodOrder(request):
                             s, e = e, e+3
                         z = ", ".join([i.item for i in all[s:e]])
                         print(z)
-                    y = i[0] + ' ('+ z +')'
-                    cart = Order(item=y, user=current_user, price=i[1])
-                    cart.save()
+                        y = i[0] + ' ('+ z +')'
+                        cart = Order(item=y, user=current_user, price=i[1])
+                        cart.save()
                 else:
                     cart = Order(item=i[0], user=current_user, price=i[1])
                     cart.save()
