@@ -15,7 +15,7 @@
             {% for item in items %}
 
             <ul class="col-sm list-group list-group-flush">
-                <h1>{{item.0}}</h1>
+                <h3>{{item.0}}</h3>
                 {% for i in item.1 %}
                     <!-- <p>{{i.3}}</p> -->
                     <li class="list-group-item">
@@ -25,13 +25,15 @@
                         <!-- <form class="" action="{% url 'addFood' %}" method="post"> -->
                         <form id="{{i.3}}" class="add-to-carts" >
 
-                            {% csrf_token %}
+                        {% csrf_token %}
+
+
                             <input class="food" type="text" name="food" value="{{i.0}}">
 
 
                         {% if i.0 == '1 topping' %}
 
-                            <select  class="topping" name="topping1" required>
+                            <select  class="topping form-control" name="topping1" required>
                             <option value="Selected" disabled selected>Select</option>
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
@@ -40,7 +42,7 @@
 
                         {% elif i.0 == '2 toppings' %}
 
-                            <select class="topping" id="tw" multiple name="topping1" required>
+                            <select class="topping form-control" id="tw" multiple name="topping1" required>
                                 <option value="Selected" disabled selected>Select</option>
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
@@ -49,7 +51,7 @@
 
                         {% elif i.0 == '3 toppings' %}
 
-                            <select class="topping" id="th" multiple name="topping1" required>
+                            <select class="topping form-control" id="th" multiple name="topping1" required>
                             <option value="Selected" disabled selected>Select</option>
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
@@ -58,7 +60,7 @@
 
                         {% elif i.0 == '1 item' %}
 
-                            <select class="topping" name="topping1" required>
+                            <select class="topping form-control" name="topping1" required>
                             <option value="Selected" disabled selected>Select</option>
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
@@ -67,7 +69,7 @@
 
                         {% elif i.0 == '2 items' %}
 
-                            <select class="topping" id="two-item" multiple name="topping1" required>
+                            <select class="topping form-control" id="two-item" multiple name="topping1" required>
                             <option value="Selected" disabled selected>Select</option>
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
@@ -76,7 +78,7 @@
 
                         {% elif i.0 == '3 items' %}
 
-                            <select class="topping" id="three-item" multiple name="topping1" required>
+                            <select class="topping form-control" id="three-item" multiple name="topping1" required>
                             <option value="Selected" disabled selected>Select</option>
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
@@ -84,8 +86,10 @@
                             </select>
 
                         {% endif %}
-                        <input class="small" type="submit" name="add1" value="{{i.1}}">
-                        <input class="large" type="submit" name="add2" value="{{i.2}}">
+                        <div class="btn-group btn-group-sm">
+                            <input class="small btn btn-outline-info" type="submit" name="add1" value="{{i.1}}">
+                            <input class="large btn btn-outline-info" type="submit" name="add2" value="{{i.2}}">
+                        </div>
                         </form>
 
                     </li>

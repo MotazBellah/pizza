@@ -32,11 +32,11 @@ menu.addEventListener('click', (e) => {
     selectionLimit(3, 'three-item');
 
     if (e.target.tagName === 'INPUT') {
-        var form = e.target.parentNode.id;
+        var form = e.target.parentNode.parentNode.id;
         var price = e.target.value
-        var food = e.target.parentNode.childNodes[3].value
-        console.log(e.target.parentNode.childNodes[5]);
-        const select1 = e.target.parentNode.childNodes[5]
+        var food = e.target.parentNode.parentNode.childNodes[3].value
+        console.log(e.target.parentNode.parentNode.childNodes);
+        const select1 = e.target.parentNode.parentNode.childNodes[5]
         // const values = Array.from(selectedd).map(el => el.value);
         // const selectedValues = values.filter((x) => x.selected).map((x)=>x.value);
         var selected1 = []
