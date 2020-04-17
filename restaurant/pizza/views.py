@@ -15,21 +15,58 @@ def index(request):
     # context = {
     #     'items': [str(i).split(', ') for i in Size.objects.all()]
     # }
-    items = [str(i).split(', ') for i in Size.objects.all()]
+    # items = [str(i).split(', ') for i in Size.objects.all()]
+    items = [(str(i) + ", " + str(i.id)).split(', ')for i in Size.objects.all()]
     menu = {}
     for i in items:
         if i[0] in menu:
             menu[i[0]].append(i[1:])
         else:
             menu[i[0]] = [i[1:]]
+    # x = [(str(i) + ", " + str(i.id)).split(', ')for i in Size.objects.all()]
+
+    # print(menu)
 
     context = {
         'items': menu.items(),
         'toppings': Topping.objects.all(),
-        'user': request.user.is_authenticated
+        'user': request.user.is_authenticated,
     }
     return render(request, "pizza/index.html", context)
 
+
+def addFood(request):
+    x = request.POST["food"]
+    y = request.POST.getlist("add1")
+    z = request.POST.getlist("add2")
+    topping_list = request.POST.getlist("topping1")
+
+    # topping2 = request.POST.getlist("topping2")
+    # topping3 = request.POST.getlist("topping3")
+    # item1 = request.POST.getlist("item1")
+    # item2 = request.POST.getlist("item2")
+    # item3 = request.POST.getlist("item3")
+    print(z)
+    print(topping_list)
+    # print(topping2)
+    # print(topping3)
+    if y:
+        price = y[0]
+    else:
+        price = z[0]
+
+    if x in ['1 topping', '1 item', '2 toppings', '2 items', '3 toppings', '3 items']:
+        y = x +" (" +", ".join(topping_list) +')'
+        cart = Order(item=y, user=request.user, price=price)
+        cart.save()
+        for t in topping_list[0].split(','):
+            a = Topping.objects.get(item=t)
+            cart.topping.add(a)
+    else:
+        cart = Order(item=x, user=request.user, price=price)
+        cart.save()
+
+    return HttpResponseRedirect(reverse("index"))
 
 def foodOrder(request):
     if request.method == "POST":
@@ -84,8 +121,8 @@ def carts(request):
     shopping = Order.objects.filter(user=request.user)
     total_price = sum(float(i.price) for i in shopping)
     food = [([i.item, i.price], i.id) for i in shopping]
-    for i in shopping:
-        print(i.topping)
+    # for i in shopping:
+    #     print(i.topping)
 
     context = {
         'food': food,

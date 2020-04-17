@@ -1,5 +1,3 @@
-.food,
-.one, .two, .three,
-.item1, .item2, .item3 {
+.food {
     display: none;
 }

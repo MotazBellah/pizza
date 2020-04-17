@@ -3,9 +3,90 @@ var total = 0;
 var topping = [];
 var items = '';
 
-menu.addEventListener('click', (e) => {
+// $(document).on('submit', '.add-to-carts', function(e) {
+//     e.preventDefault();
+//
+//     $.ajax({
+//         type: 'post',
+//         url: '/addFood',
+//         data: {
+//             food: $('.food').val(),
+//             add1: $('.small').val(),
+//             add2: $('.larg').val(),
+//             topping1: $('.topping').val(),
+//             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+//         },
+//         success: function () {
+//             alert('Added to your carts')
+//         }
+//     });
+// });
 
-    // console.log(e.target.tagName);
+
+
+menu.addEventListener('click', (e) => {
+    // selectionLimit(2, 'test');
+    selectionLimit(2, 'tw');
+    selectionLimit(3, 'th');
+    selectionLimit(2, 'two-item');
+    selectionLimit(3, 'three-item');
+
+    if (e.target.tagName === 'INPUT') {
+        var form = e.target.parentNode.id;
+        var price = e.target.value
+        var food = e.target.parentNode.childNodes[3].value
+        console.log(e.target.parentNode.childNodes[5]);
+        const select1 = e.target.parentNode.childNodes[5]
+        // const values = Array.from(selectedd).map(el => el.value);
+        // const selectedValues = values.filter((x) => x.selected).map((x)=>x.value);
+        var selected1 = []
+        for (var i = 0; i < select1.length; i++) {
+        if (select1.options[i].selected) {
+            selected1.push(select1.options[i].value);
+        }
+    }
+
+        console.log(selected1);
+        console.log(price);
+        console.log(food);
+        var check = true
+        var id = "#" + form
+        // console.log($(id+'.food').val());
+
+        console.log("#" + form);
+        $(document).on('submit', id, function(e) {
+            e.preventDefault();
+            if (check) {
+                $.ajax({
+                    type: 'post',
+                    url: '/addFood',
+                    data: {
+                        // food: $('.food').val(),
+                        // add1: $('.small').val(),
+                        // add2: $('.larg').val(),
+                        // topping1: $('.topping').val(),
+                        // csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                        food: food,
+                        add2: price,
+                        topping1: selected1.toString(),
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success: function () {
+                        alert('Added to your carts')
+
+                    }
+
+                });
+                check = false;
+
+            }
+
+
+        });
+
+    }
+
+    // console.log(e.target.parentNode);
     // console.log(e.target.value);
     if (e.target.tagName === 'INPUT') {
         var adds = ['1 topping', '2 toppings', '3 toppings', '1 item', '2 items', '3 items']
@@ -15,7 +96,7 @@ menu.addEventListener('click', (e) => {
             // console.log(e.target.parentElement.firstChild.nextSibling.value);
             var top = e.target.parentElement.firstChild.nextSibling.value
             if (adds.includes(top)) {
-                console.log(top);
+                // console.log(top);
                 if (top === '1 topping') {
                     document.getElementsByClassName("one")[0].style.display = 'block';
                 }
@@ -99,7 +180,7 @@ menu.addEventListener('click', (e) => {
     }
 
     // console.log(total);
-    console.log(topping);
+    // console.log(topping);
 
 });
 

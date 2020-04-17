@@ -10,73 +10,83 @@
         <a href="{% url 'signout' %}">Logout</a>
         <a href="{% url 'carts' %}">Carts</a>
 
-        <form class="" action="{% url 'foodOrder' %}" method="post">
-            {% csrf_token %}
+        <!-- <form class="" action="{% url 'foodOrder' %}" method="post"> -->
 
             {% for item in items %}
+
             <ul>
                 <h1>{{item.0}}</h1>
                 {% for i in item.1 %}
+                    <!-- <p>{{i.3}}</p> -->
                     <li>
                         <input class="food" type="checkbox" name="food" value="{{i.0}}">
                         <span>{{i.0}}</span>
-                        <input class="price" type="checkbox" name="checkbox" value="{{i.1}}">{{i.1}}
-                        <input class="price" type="checkbox" name="checkbox" value="{{i.2}}">{{i.2}}
+
+                        <!-- <form class="" action="{% url 'addFood' %}" method="post"> -->
+                        <form id="{{i.3}}" class="add-to-carts" >
+
+                            {% csrf_token %}
+                            <input class="food" type="text" name="food" value="{{i.0}}">
+
+
                         {% if i.0 == '1 topping' %}
-                        <div class="one">
-                            <select  name="topping1">
+
+                            <select  class="topping" name="topping1" required>
                             <option value="Selected" disabled selected>Select</option>
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
                                 {% endfor %}
                             </select>
-                        </div>
+
                         {% elif i.0 == '2 toppings' %}
-                        <div class="two">
-                            <select id="tw" multiple name="topping2">
+
+                            <select class="topping" id="tw" multiple name="topping1" required>
                                 <option value="Selected" disabled selected>Select</option>
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
                                 {% endfor %}
                             </select>
-                        </div>
+
                         {% elif i.0 == '3 toppings' %}
-                        <div class="three">
-                            <select id="th" multiple name="topping3">
+
+                            <select class="topping" id="th" multiple name="topping1" required>
                             <option value="Selected" disabled selected>Select</option>
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
                                 {% endfor %}
                             </select>
-                        </div>
+
                         {% elif i.0 == '1 item' %}
-                        <div class="item1">
-                            <select name="item1">
+
+                            <select class="topping" name="topping1" required>
                             <option value="Selected" disabled selected>Select</option>
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
                                 {% endfor %}
                             </select>
-                        </div>
+
                         {% elif i.0 == '2 items' %}
-                        <div class="item2">
-                            <select id="two-item" multiple name="item2">
+
+                            <select class="topping" id="two-item" multiple name="topping1" required>
                             <option value="Selected" disabled selected>Select</option>
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
                                 {% endfor %}
                             </select>
-                        </div>
+
                         {% elif i.0 == '3 items' %}
-                        <div class="item3">
-                            <select id="three-item" multiple name="item3">
+
+                            <select class="topping" id="three-item" multiple name="topping1" required>
                             <option value="Selected" disabled selected>Select</option>
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
                                 {% endfor %}
                             </select>
-                        </div>
+
                         {% endif %}
+                        <input class="small" type="submit" name="add1" value="{{i.1}}">
+                        <input class="large" type="submit" name="add2" value="{{i.2}}">
+                        </form>
 
                     </li>
                 {% endfor %}
@@ -90,7 +100,7 @@
                 {% endfor %}
             </select> -->
             <input id='carts' type="submit" value="Order"/>
-        </form>
+        <!-- </form> -->
 
         <div id="selected-toopings">
 
