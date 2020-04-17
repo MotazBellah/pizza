@@ -68,52 +68,6 @@ def addFood(request):
 
     return HttpResponseRedirect(reverse("index"))
 
-def foodOrder(request):
-    if request.method == "POST":
-        prices = request.POST.getlist("checkbox")
-        items = request.POST.getlist("food")
-        current_user = request.user
-
-        topping1 = request.POST.getlist("topping1")
-        topping2 = request.POST.getlist("topping2")
-        topping3 = request.POST.getlist("topping3")
-        item1 = request.POST.getlist("item1")
-        item2 = request.POST.getlist("item2")
-        item3 = request.POST.getlist("item3")
-
-        for i in range(len(items)):
-            if items[i] == '1 topping':
-                create_order_topping(items[i], topping1, prices[i], current_user)
-
-            elif items[i] == '1 item':
-                create_order_topping(items[i], item1, prices[i], current_user)
-
-            elif items[i] == '2 toppings':
-                create_order_topping(items[i], topping2, prices[i], current_user)
-
-            elif items[i] == '2 items':
-                create_order_topping(items[i], item2, prices[i], current_user)
-
-            elif items[i] == '3 toppings':
-                create_order_topping(items[i], topping3, prices[i], current_user)
-
-            elif items[i] == '3 items':
-                create_order_topping(items[i], item3, prices[i], current_user)
-
-            else:
-                cart = Order(item=items[i], user=current_user, price=prices[i])
-                cart.save()
-
-        return HttpResponseRedirect(reverse("index"))
-
-def create_order_topping(item, topping_list, price, user):
-    y = item +" (" +", ".join(topping_list) +')'
-    cart = Order(item=y, user=user, price=price)
-    cart.save()
-    for t in topping_list:
-        a = Topping.objects.get(item=t)
-        cart.topping.add(a)
-
 
 def carts(request):
     if not request.user.is_authenticated:

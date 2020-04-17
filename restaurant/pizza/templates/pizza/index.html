@@ -10,15 +10,15 @@
         <a href="{% url 'signout' %}">Logout</a>
         <a href="{% url 'carts' %}">Carts</a>
 
-        <!-- <form class="" action="{% url 'foodOrder' %}" method="post"> -->
+        <div class="row">
 
             {% for item in items %}
 
-            <ul>
+            <ul class="col-sm list-group list-group-flush">
                 <h1>{{item.0}}</h1>
                 {% for i in item.1 %}
                     <!-- <p>{{i.3}}</p> -->
-                    <li>
+                    <li class="list-group-item">
                         <input class="food" type="checkbox" name="food" value="{{i.0}}">
                         <span>{{i.0}}</span>
 
@@ -92,6 +92,7 @@
                 {% endfor %}
             </ul>
             {% endfor %}
+            </div>
 
             <!-- <select  name="topping">
                 <option value="Select">Select</option>
