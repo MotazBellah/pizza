@@ -1,3 +1,11 @@
 .food {
     display: none;
 }
+
+.food-type {
+    float: left;
+}
+
+.price {
+    float: right;
+}
