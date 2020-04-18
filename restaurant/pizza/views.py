@@ -25,7 +25,9 @@ def index(request):
             menu[i[0]] = [i[1:]]
     # x = [(str(i) + ", " + str(i.id)).split(', ')for i in Size.objects.all()]
 
-    # print(menu)
+    print(request.user.is_authenticated)
+    for i in menu.items():
+        print(len(i[1]))
 
     context = {
         'items': menu.items(),
