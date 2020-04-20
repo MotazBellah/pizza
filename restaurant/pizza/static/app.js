@@ -3,26 +3,6 @@ var total = 0;
 var topping = [];
 var items = '';
 
-// $(document).on('submit', '.add-to-carts', function(e) {
-//     e.preventDefault();
-//
-//     $.ajax({
-//         type: 'post',
-//         url: '/addFood',
-//         data: {
-//             food: $('.food').val(),
-//             add1: $('.small').val(),
-//             add2: $('.larg').val(),
-//             topping1: $('.topping').val(),
-//             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-//         },
-//         success: function () {
-//             alert('Added to your carts')
-//         }
-//     });
-// });
-
-
 
 menu.addEventListener('click', (e) => {
     // selectionLimit(2, 'test');
@@ -40,11 +20,15 @@ menu.addEventListener('click', (e) => {
         // const values = Array.from(selectedd).map(el => el.value);
         // const selectedValues = values.filter((x) => x.selected).map((x)=>x.value);
         var selected1 = []
-        for (var i = 0; i < select1.length; i++) {
-        if (select1.options[i].selected) {
-            selected1.push(select1.options[i].value);
+        if (select1) {
+            for (var i = 0; i < select1.length; i++) {
+            if (select1.options[i].selected) {
+                selected1.push(select1.options[i].value);
+            }
         }
-    }
+
+        }
+
 
         console.log(selected1);
         console.log(price);
@@ -80,7 +64,6 @@ menu.addEventListener('click', (e) => {
                 check = false;
 
             }
-
 
         });
 
@@ -185,11 +168,15 @@ menu.addEventListener('click', (e) => {
 });
 
 function selectionLimit(limit, id) {
-    document.getElementById(id).addEventListener("change", function() {
-        // console.log(e.target.value);
-        if ($(this).val().length > limit) {
-            $(this).val(null);
-            alert('You can select upto ' + limit.toString() +' options only');
-        }
-    });
+    var el = document.getElementById(id);
+    if (el) {
+        el.addEventListener("change", function() {
+            // console.log(e.target.value);
+            if ($(this).val().length > limit) {
+                $(this).val(null);
+                alert('You can select upto ' + limit.toString() +' options only');
+            }
+        });
+    }
+
 }

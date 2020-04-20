@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.shortcuts import render
-from .models import Size, Topping, Order, Menu, Purchase
+from .models import Type, Size, Topping, Order, Menu, Purchase
 from django.views.decorators.csrf import csrf_protect
 
 # Create your views here.
@@ -25,16 +25,33 @@ def index(request):
             menu[i[0]] = [i[1:]]
     # x = [(str(i) + ", " + str(i.id)).split(', ')for i in Size.objects.all()]
 
-    print(request.user.is_authenticated)
-    for i in menu.items():
-        print(len(i[1]))
-
+    category = Type.objects.all()
+    #
+    # context = {
+    #     'items': menu.items(),
+    #     'toppings': Topping.objects.all(),
+    #     'user': request.user.is_authenticated,
+    # }
     context = {
-        'items': menu.items(),
-        'toppings': Topping.objects.all(),
-        'user': request.user.is_authenticated,
+        'category': category
     }
-    return render(request, "pizza/index.html", context)
+    # return render(request, "pizza/index.html", context)
+    return render(request, "pizza/index2.html", context)
+
+def menus(request, item_id):
+    items = Menu.objects.filter(type=item_id)
+    print(items)
+    food = [Size.objects.filter(menu=i) for i in items]
+    print(food)
+    # for i in food:
+    #     print(i[0])
+    # print(food)
+    context = {
+        'food': [i[0] for i in food],
+        'toppings': Topping.objects.all(),
+    }
+        # return render(request, "pizza/index.html", context)
+    return render(request, "pizza/menu.html", context)
 
 
 def addFood(request):

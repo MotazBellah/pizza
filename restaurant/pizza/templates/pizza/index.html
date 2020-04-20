@@ -5,19 +5,15 @@
 {% block body %}
     <h1>Pizza</h1>
     <div id="menu">
-        <a href="{% url 'register' %}">Register</a>
-        <a href="{% url 'signin' %}">Login</a>
-        <a href="{% url 'signout' %}">Logout</a>
-        <a href="{% url 'carts' %}">Carts</a>
-
         <div class="row">
 
             {% for item in items %}
 
             <ul class="col-md list-group list-group-flush">
                 <h3>{{item.0}}</h3>
+                <h2>{{ item.1 | length}}</h2>
                 {% for i in item.1 %}
-                    <!-- <p>{{i.3}}</p> -->
+                    <!-- <p>{{ len.item.1 }}</p> -->
                     <li class="list-group-item">
                         <input class="food" type="checkbox" name="food" value="{{i.0}}">
                         <span class="food-type">{{i.0}}</span>
@@ -94,6 +90,7 @@
 
                     </li>
                 {% endfor %}
+
             </ul>
             {% endfor %}
             </div>

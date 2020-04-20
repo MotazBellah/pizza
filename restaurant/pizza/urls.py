@@ -10,4 +10,6 @@ urlpatterns = [
     path("<int:item_id>/delete", views.delete, name="delete"),
     path("addFood", views.addFood, name="addFood"),
     path("purchasing", views.purchasing, name="purchasing"),
+    path("<int:item_id>/menus", views.menus, name="menus"),
+
 ]

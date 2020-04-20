@@ -1,0 +1,16 @@
+{% extends "pizza/layout.html" %}
+
+{% block title %}Pizza{% endblock %}
+
+{% block body %}
+    <h1>Pizza</h1>
+    <ul>
+        {% for i in category%}
+            <li><a href="{% url 'menus' i.id %}"><h3>{{ i }}</h3></a></li>
+        {% endfor %}
+
+    </ul>
+
+
+
+{% endblock %}
