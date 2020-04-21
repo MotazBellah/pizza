@@ -4,6 +4,11 @@ html, body {
     height:100%;
 }
 
+body {
+  background: url(pizza3.jpg) center no-repeat;
+  background-size: 100%, cover;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -24,13 +29,25 @@ html, body {
 
 .right-side {
     float: right;
-    width: 50%
+    width: 50%;
+    background-color: transparent;
 }
 
 .left-side {
     float: left;
     width: 20%;
-    margin-right: 5%
+    margin-right: 5%;
+    background-color: transparent;
+}
+
+ul, li {
+    background-color: transparent;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
 
