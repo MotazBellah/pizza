@@ -5,8 +5,10 @@ html, body {
 }
 
 body {
-  background: url(pizza3.jpg) center no-repeat;
-  background-size: 100%, cover;
+  background: url(pizza3.jpg) no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+
 }
 
 * {
