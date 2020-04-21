@@ -43,12 +43,14 @@ def menus(request, item_id):
     print(items)
     food = [Size.objects.filter(menu=i) for i in items]
     print(food)
+    category = Type.objects.all()
     # for i in food:
     #     print(i[0])
     # print(food)
     context = {
         'food': [i[0] for i in food],
         'toppings': Topping.objects.all(),
+        'category': category
     }
         # return render(request, "pizza/index.html", context)
     return render(request, "pizza/menu.html", context)

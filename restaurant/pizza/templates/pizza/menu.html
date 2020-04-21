@@ -3,8 +3,13 @@
 {% block title %}Pizza{% endblock %}
 
 {% block body %}
-    <h1>Pizza</h1>
     <div id="menu">
+        <ul>
+            {% for i in category%}
+                <li><a href="{% url 'menus' i.id %}"><h3>{{ i }}</h3></a></li>
+            {% endfor %}
+        </ul>
+
         <ul class="col-md list-group list-group-flush">
             {% for i in food %}
                 <li class="list-group-item">
