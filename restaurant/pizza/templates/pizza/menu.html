@@ -3,85 +3,95 @@
 {% block title %}Pizza{% endblock %}
 
 {% block body %}
-    <div id="menu">
-        <ul>
-            {% for i in category%}
-                <li><a href="{% url 'menus' i.id %}"><h3>{{ i }}</h3></a></li>
-            {% endfor %}
-        </ul>
+    <div id="menu" class="mt-3">
+        <div class="row align-items-center h-100">
+            <div class="left-side">
+                <ul class="list-group">
+                    {% for i in category%}
+                        <li>
+                            <a href="{% url 'menus' i.id %}" class="list-group-item list-group-item-action"><h5>{{ i }}</h5></a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
 
-        <ul class="col-md list-group list-group-flush">
-            {% for i in food %}
-                <li class="list-group-item">
-                    <input class="food" type="checkbox" name="food" value="{{ i.menu.item }}">
-                    <span class="food-type">{{ i.menu.item }}</span>
+            <div class="right-side">
 
-                    <form id="{{i.id}}" class="add-to-carts">
-                        {% csrf_token %}
-                        <input class="food" type="text" name="food" value="{{ i.menu.item }}">
-                    {% if i.menu.item == '1 topping' %}
 
-                        <select  class="topping form-control my-2" name="topping1" required>
-                        <option value="Selected" disabled selected>Select</option>
-                            {% for i in toppings %}
-                                <option value="{{i.item}}">{{ i.item }}</option>
-                            {% endfor %}
-                        </select>
+            <ul class="col-md list-group list-group-flush">
+                {% for i in food %}
+                    <li class="list-group-item">
+                        <input class="food" type="checkbox" name="food" value="{{ i.menu.item }}">
+                        <span class="food-type">{{ i.menu.item }}</span>
 
-                    {% elif i.menu.item == '2 toppings' %}
+                        <form id="{{i.id}}" class="add-to-carts">
+                            {% csrf_token %}
+                            <input class="food" type="text" name="food" value="{{ i.menu.item }}">
+                        {% if i.menu.item == '1 topping' %}
 
-                        <select class="topping form-control my-2" id="tw" multiple name="topping1" required>
+                            <select  class="topping form-control my-2" name="topping1" required>
                             <option value="Selected" disabled selected>Select</option>
-                            {% for i in toppings %}
-                                <option value="{{i.item}}">{{ i.item }}</option>
-                            {% endfor %}
-                        </select>
+                                {% for i in toppings %}
+                                    <option value="{{i.item}}">{{ i.item }}</option>
+                                {% endfor %}
+                            </select>
 
-                    {% elif i.menu.item == '3 toppings' %}
+                        {% elif i.menu.item == '2 toppings' %}
 
-                        <select class="topping form-control my-2" id="th" multiple name="topping1" required>
-                        <option value="Selected" disabled selected>Select</option>
-                            {% for i in toppings %}
-                                <option value="{{i.item}}">{{ i.item }}</option>
-                            {% endfor %}
-                        </select>
+                            <select class="topping form-control my-2" id="tw" multiple name="topping1" required>
+                                <option value="Selected" disabled selected>Select</option>
+                                {% for i in toppings %}
+                                    <option value="{{i.item}}">{{ i.item }}</option>
+                                {% endfor %}
+                            </select>
 
-                    {% elif i.menu.item == '1 item' %}
+                        {% elif i.menu.item == '3 toppings' %}
 
-                        <select class="topping form-control my-2" name="topping1" required>
-                        <option value="Selected" disabled selected>Select</option>
-                            {% for i in toppings %}
-                                <option value="{{i.item}}">{{ i.item }}</option>
-                            {% endfor %}
-                        </select>
+                            <select class="topping form-control my-2" id="th" multiple name="topping1" required>
+                            <option value="Selected" disabled selected>Select</option>
+                                {% for i in toppings %}
+                                    <option value="{{i.item}}">{{ i.item }}</option>
+                                {% endfor %}
+                            </select>
 
-                    {% elif i.menu.item == '2 items' %}
+                        {% elif i.menu.item == '1 item' %}
 
-                        <select class="topping form-control my-2" id="two-item" multiple name="topping1" required>
-                        <option value="Selected" disabled selected>Select</option>
-                            {% for i in toppings %}
-                                <option value="{{i.item}}">{{ i.item }}</option>
-                            {% endfor %}
-                        </select>
+                            <select class="topping form-control my-2" name="topping1" required>
+                            <option value="Selected" disabled selected>Select</option>
+                                {% for i in toppings %}
+                                    <option value="{{i.item}}">{{ i.item }}</option>
+                                {% endfor %}
+                            </select>
 
-                    {% elif i.menu.item == '3 items' %}
+                        {% elif i.menu.item == '2 items' %}
 
-                        <select class="topping form-control my-2" id="three-item" multiple name="topping1" required>
-                        <option value="Selected" disabled selected>Select</option>
-                            {% for i in toppings %}
-                                <option value="{{i.item}}">{{ i.item }}</option>
-                            {% endfor %}
-                        </select>
+                            <select class="topping form-control my-2" id="two-item" multiple name="topping1" required>
+                            <option value="Selected" disabled selected>Select</option>
+                                {% for i in toppings %}
+                                    <option value="{{i.item}}">{{ i.item }}</option>
+                                {% endfor %}
+                            </select>
 
-                    {% endif %}
-                    <div class="price btn-group btn-group-sm">
-                        <input class="small btn btn-outline-info" type="submit" title="Small" name="add1" value="{{i.small}}">
-                        <input class="large btn btn-outline-info" type="submit" title="Large" name="add2" value="{{i.large}}">
-                    </div>
-                    </form>
-                </li>
-            {% endfor %}
-        </ul>
+                        {% elif i.menu.item == '3 items' %}
+
+                            <select class="topping form-control my-2" id="three-item" multiple name="topping1" required>
+                            <option value="Selected" disabled selected>Select</option>
+                                {% for i in toppings %}
+                                    <option value="{{i.item}}">{{ i.item }}</option>
+                                {% endfor %}
+                            </select>
+
+                        {% endif %}
+                        <div class="price btn-group btn-group-sm">
+                            <input class="small btn btn-outline-info" type="submit" title="Small" name="add1" value="{{i.small}}">
+                            <input class="large btn btn-outline-info" type="submit" title="Large" name="add2" value="{{i.large}}">
+                        </div>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+            </div>
+        </div>
 
     </div>
 {% endblock %}
