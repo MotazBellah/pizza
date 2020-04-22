@@ -8,6 +8,7 @@ body {
   background: url(pizza3.jpg) no-repeat center center fixed;
   background-size: cover;
   height: 100%;
+  color: white;
 
 }
 
@@ -15,6 +16,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    color: white;
 }
 
 .food {
@@ -33,6 +35,8 @@ body {
     float: right;
     width: 50%;
     background-color: transparent;
+    font-family: 'Satisfy', cursive;
+    font-size: 1.2em;
 }
 
 .left-side {
@@ -40,6 +44,8 @@ body {
     width: 20%;
     margin-right: 5%;
     background-color: transparent;
+    font-family: 'Caveat', cursive;
+    font-size: large;
 }
 
 ul, li {
