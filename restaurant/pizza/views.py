@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
@@ -5,6 +6,7 @@ from django.urls import reverse
 from django.shortcuts import render
 from .models import Type, Size, Topping, Order, Menu, Purchase
 from django.views.decorators.csrf import csrf_protect
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -108,10 +110,22 @@ def carts(request):
 def purchasing(request):
     if not request.user.is_authenticated:
         return render(request, "pizza/login.html", {"message":None})
+
     shopping = Order.objects.filter(user=request.user)
+    total_price = sum(float(i.price) for i in shopping)
+    email_message = ''
 
     for i in shopping:
         Purchase(order=i.item, user=request.user, price=i.price).save()
+        email_message += i.item + "  " + str(i.price) + '\n'
+
+    email_message += 'Total price is {}'.format(str(total_price))
+    # print(email_message)
+
+    subject = "YOUR ORDER"
+    from_email = settings.EMAIL_HOST_USER
+    to_list = [request.user.email,]
+    send_mail(subject, email_message, from_email, to_list, fail_silently=False)
 
     Order.objects.filter(user=request.user).delete()
 
