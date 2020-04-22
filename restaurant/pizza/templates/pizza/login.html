@@ -1,18 +1,27 @@
-{% extends "pizza/layout.html" %}
+{% load socialaccount %}
+{% providers_media_js %}
 
-{% block title %}Pizza - Login{% endblock %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <h2>Create your account and order now!</h2>
+        {% if message %}
+            <div>
+                {{ message }}
+            </div>
+        {% endif %}
+        <form action="{% url 'signin' %}" method="post">
+            {% csrf_token %}
+            <input name="username" type="text"/>
+            <input name="password" type="password"/>
+            <input type="submit" value="Login"/>
+        </form>
 
-{% block body %}
-    <h2>Create your account and order now!</h2>
-    {% if message %}
-        <div>
-            {{ message }}
-        </div>
-    {% endif %}
-    <form action="{% url 'signin' %}" method="post">
-        {% csrf_token %}
-        <input name="username" type="text"/>
-        <input name="password" type="password"/>
-        <input type="submit" value="Login"/>
-    </form>
-{% endblock %}
+        <a href="{% provider_login_url 'facebook' method='js_sdk' %}">Facebook Connect</a>
+
+    </body>
+</html>

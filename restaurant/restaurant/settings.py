@@ -47,6 +47,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook'
 ]
 
 MIDDLEWARE = [
@@ -131,6 +136,15 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = '/'
 
 CELERY_BROKER_URL = 'redis://h:pf6992483732c33c2e99ab27f18ce59bd6963a27bbdd3722e42aa5b8c7125e94e@ec2-3-86-75-248.compute-1.amazonaws.com:24249'
 CELERY_ACCEPT_CONTENT = ['json']
