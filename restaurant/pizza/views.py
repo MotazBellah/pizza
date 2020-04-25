@@ -118,7 +118,7 @@ def carts(request):
 
     context = {
         'food': food,
-        'price': total_price
+        'price': round(total_price, 2)
     }
     return render(request, "pizza/payment.html", context)
 
