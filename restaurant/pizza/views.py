@@ -100,22 +100,6 @@ def carts(request):
     total_price = sum(float(i.price) for i in shopping)
     food = [([i.item, i.price], i.id) for i in shopping]
 
-    if request.method == "POST":
-        token = request.POST.get('stripeToken', False)
-        print(token)
-        intent = stripe.PaymentIntent.create(
-        amount=97,
-        currency='usd',
-        confirm=True,
-        payment_method_types=["card"],
-        receipt_email=request.user.email,
-        metadata={'integration_check': 'accept_a_payment'},
-        )
-
-        # return HttpResponseRedirect(reverse("carts"))
-    # for i in shopping:
-    #     print(i.topping)
-
     context = {
         'food': food,
         'price': round(total_price, 2)
@@ -128,20 +112,12 @@ def payments(request):
 
     shopping = Order.objects.filter(user=request.user)
     total_price = sum(float(i.price) for i in shopping)
+    email_message = ''
 
     if request.method == "POST":
         print(request.user.email)
-        # x = request.POST["token"]
-        # print(x)
         token = request.POST.get('token', False)
         print(token)
-        # # print(token)
-        # intent = stripe.PaymentIntent.create(
-        # amount=97,
-        # currency='usd',
-        # receipt_email=request.user.email,
-        # metadata={'integration_check': 'accept_a_payment'},
-        # )
 
         pay = stripe.Charge.create(
           amount=int(round(total_price, 2) * 100),
@@ -151,35 +127,22 @@ def payments(request):
           receipt_email=request.user.email,
         )
 
-        return HttpResponseRedirect(reverse("carts"))
+        for i in shopping:
+            Purchase(order=i.item, user=request.user, price=i.price).save()
+            email_message += i.item + "  " + str(i.price) + '\n'
 
-        # stripe.PaymentIntent.confirm(
-        #   "pi_1GbCB9Gj34zY5PaG5fP5LRZq",
-        # )
-
-def purchasing(request):
-    if not request.user.is_authenticated:
-        return render(request, "pizza/login.html", {"message":None})
-
-    shopping = Order.objects.filter(user=request.user)
-    total_price = sum(float(i.price) for i in shopping)
-    email_message = ''
-
-    for i in shopping:
-        Purchase(order=i.item, user=request.user, price=i.price).save()
-        email_message += i.item + "  " + str(i.price) + '\n'
-
-    email_message += 'Total price is {}'.format(str(total_price))
+        email_message += 'Total price is {}'.format(str(total_price))
     # print(email_message)
 
-    subject = "YOUR ORDER"
-    from_email = settings.EMAIL_HOST_USER
-    to_list = [request.user.email,]
-    send_mail(subject, email_message, from_email, to_list, fail_silently=False)
+        subject = "YOUR ORDER"
+        from_email = settings.EMAIL_HOST_USER
+        to_list = [request.user.email,]
+        send_mail(subject, email_message, from_email, to_list, fail_silently=False)
 
-    Order.objects.filter(user=request.user).delete()
+        Order.objects.filter(user=request.user).delete()
 
-    return HttpResponseRedirect(reverse("carts"))
+        return HttpResponseRedirect(reverse("carts"))
+
 
 def delete(request, item_id):
     if not request.user.is_authenticated:
