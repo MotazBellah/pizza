@@ -124,7 +124,6 @@ def payments(request):
           currency="usd",
           source=token,
           description=request.user.email,
-          receipt_email=request.user.email,
         )
 
         for i in shopping:
