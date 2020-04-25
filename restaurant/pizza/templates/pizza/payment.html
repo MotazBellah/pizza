@@ -231,22 +231,29 @@ label {
         var errorElement = document.getElementById('card-errors');
         errorElement.textContent = result.error.message;
       } else {
-        // Send the token to your server.
-        stripeTokenHandler(result.token);
-        // alert(result.token.id)
-        // console.log(result.token.id);
-        $.ajax({
-            type: 'post',
-            url: '/payments',
-            data: {
-                token: result.token.id,
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-            },
-            success: function () {
-                alert('Success!')
-            }
+        // confirm the payment
+        var conf = confirm("Are you sure you want to pay {{ price }} ?")
+        if (conf) {
+            // Send the token to your server.
+            stripeTokenHandler(result.token);
+            // alert(result.token.id)
+            // console.log(result.token.id);
+            $.ajax({
+                type: 'post',
+                url: '/payments',
+                data: {
+                    token: result.token.id,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function () {
+                    alert('Success!')
+                }
+            });
 
-        });
+        } else {
+            alert("The payment is cancelled!")
+        }
+
       }
     });
   });
