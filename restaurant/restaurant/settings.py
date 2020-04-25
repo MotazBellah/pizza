@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.facebook'
+    'allauth.socialaccount.providers.facebook',
+    'stripe',
 ]
 
 MIDDLEWARE = [
@@ -145,6 +146,10 @@ AUTHENTICATION_BACKENDS = (
 SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'
+
+STRIPE_SECRET_KEY = 'sk_test_mhZnMzAqoxRxzn6MMjz2heVv00I2kRo0nf'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_kcjuC8vQSujbOVcVPabfiLhq00iXw73glo'
+
 
 CELERY_BROKER_URL = 'redis://h:pf6992483732c33c2e99ab27f18ce59bd6963a27bbdd3722e42aa5b8c7125e94e@ec2-3-86-75-248.compute-1.amazonaws.com:24249'
 CELERY_ACCEPT_CONTENT = ['json']

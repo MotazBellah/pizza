@@ -7,9 +7,10 @@ from django.shortcuts import render
 from .models import Type, Size, Topping, Order, Menu, Purchase
 from django.views.decorators.csrf import csrf_protect
 from django.core.mail import send_mail
+import stripe
 
 # Create your views here.
-
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def index(request):
     if not request.user.is_authenticated:
@@ -98,6 +99,20 @@ def carts(request):
     shopping = Order.objects.filter(user=request.user)
     total_price = sum(float(i.price) for i in shopping)
     food = [([i.item, i.price], i.id) for i in shopping]
+
+    if request.method == "POST":
+        token = request.POST.get('stripeToken', False)
+        print(token)
+        intent = stripe.PaymentIntent.create(
+        amount=97,
+        currency='usd',
+        confirm=True,
+        payment_method_types=["card"],
+        receipt_email=request.user.email,
+        metadata={'integration_check': 'accept_a_payment'},
+        )
+
+        # return HttpResponseRedirect(reverse("carts"))
     # for i in shopping:
     #     print(i.topping)
 
@@ -105,7 +120,42 @@ def carts(request):
         'food': food,
         'price': total_price
     }
-    return render(request, "pizza/cart.html", context)
+    return render(request, "pizza/payment.html", context)
+
+def payments(request):
+    if not request.user.is_authenticated:
+        return render(request, "pizza/login.html", {"message":None})
+
+    shopping = Order.objects.filter(user=request.user)
+    total_price = sum(float(i.price) for i in shopping)
+
+    if request.method == "POST":
+        print(request.user.email)
+        # x = request.POST["token"]
+        # print(x)
+        token = request.POST.get('token', False)
+        print(token)
+        # # print(token)
+        # intent = stripe.PaymentIntent.create(
+        # amount=97,
+        # currency='usd',
+        # receipt_email=request.user.email,
+        # metadata={'integration_check': 'accept_a_payment'},
+        # )
+
+        pay = stripe.Charge.create(
+          amount=int(round(total_price, 2) * 100),
+          currency="usd",
+          source=token,
+          description=request.user.email,
+          receipt_email=request.user.email,
+        )
+
+        return HttpResponseRedirect(reverse("carts"))
+
+        # stripe.PaymentIntent.confirm(
+        #   "pi_1GbCB9Gj34zY5PaG5fP5LRZq",
+        # )
 
 def purchasing(request):
     if not request.user.is_authenticated:
