@@ -53,3 +53,13 @@ class Purchase(models.Model):
 
     def __str__(self):
         return f"{self.user}, {self.order}, {self.price}"
+
+
+class Product(models.Model):
+    titel = models.CharField(max_length=64)
+    description = models.TextField()
+    photo = models.ImageField()
+    price = models.FloatField(default=0.0)
+
+    def __str__(self):
+        return f"{self.titel}, {self.description}, {self.price}"

@@ -1,14 +1,34 @@
 {% extends "pizza/layout.html" %}
+{% load static %}
 
 {% block title %}Pizza{% endblock %}
 
-{% block body %}
-    <h1>Pizza</h1>
-    <ul>
-        {% for i in category%}
-            <li><a href="{% url 'menus' i.id %}"><h3>{{ i }}</h3></a></li>
-        {% endfor %}
-    </ul>
+{% block content %}
+<div class="home">
+    <div class="contain mt-3">
+        <h1>Welcom to Online Pizza</h1>
+        <h3>Our Popular Products</h3>
+    </div>
+
+    {% for i in products %}
+
+    <div class="card mt-3">
+    <div class="card-body clearfix">
+        <img class="float-left" src="{{ i.photo.url }}" alt="">
+        <div class="card-content float-right">
+            <h4>{{ i.titel }}</h4>
+            <span>{{ i.description}}</span>
+            <h4>$ {{ i.price}}</h4>
+            <form  action="" method="post">
+                    <input class="btn btn-primary button m-2" type="submit" value="Add to cart">
+            </form>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+</div>
 
 
 

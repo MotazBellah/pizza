@@ -4,7 +4,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.shortcuts import render
-from .models import Type, Size, Topping, Order, Menu, Purchase
+from .models import Type, Size, Topping, Order, Menu, Purchase, Product
 from django.views.decorators.csrf import csrf_protect
 from django.core.mail import send_mail
 import stripe
@@ -15,10 +15,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def index(request):
     if not request.user.is_authenticated:
         return render(request, "pizza/login.html", {"message":None})
-    # context = {
-    #     'items': [str(i).split(', ') for i in Size.objects.all()]
-    # }
-    # items = [str(i).split(', ') for i in Size.objects.all()]
+
     items = [(str(i) + ", " + str(i.id)).split(', ')for i in Size.objects.all()]
     menu = {}
     for i in items:
@@ -27,7 +24,10 @@ def index(request):
         else:
             menu[i[0]] = [i[1:]]
     # x = [(str(i) + ", " + str(i.id)).split(', ')for i in Size.objects.all()]
-
+    products = Product.objects.all()
+    print(products)
+    for i in products:
+        print(i.photo)
     category = Type.objects.all()
     #
     # context = {
@@ -36,7 +36,8 @@ def index(request):
     #     'user': request.user.is_authenticated,
     # }
     context = {
-        'category': category
+        'category': category,
+        'products': products
     }
     # return render(request, "pizza/index.html", context)
     return render(request, "pizza/index2.html", context)
