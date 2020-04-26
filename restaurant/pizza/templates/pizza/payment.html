@@ -1,14 +1,16 @@
 {% load static %}
 <html><head>
+    <link rel="stylesheet" href="{% static 'app.css' %}">
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Satisfy&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet">
 <style media="screen">
-body, html {
-  height: 100%;
-  background-color: #f7f8f9;
-  color: #6b7c93;
-}
 
-*, label {
+label {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 16px;
   font-variant: normal;
@@ -39,7 +41,7 @@ button {
   transition: all 150ms ease;
   float: left;
   margin-left: 12px;
-  margin-top: 28px;
+
 }
 
 button:hover {
@@ -66,10 +68,10 @@ label {
   color: #fa755a;
 }
 
-.form-row {
+/* .form-row {
   width: 70%;
   float: left;
-}
+} */
 
 .token {
   color: #32325d;
@@ -78,7 +80,7 @@ label {
 }
 
 .wrapper {
-  width: 670px;
+  width: 40%;
   margin: 0 auto;
   height: 100%;
 }
@@ -112,7 +114,6 @@ label {
  */
 .StripeElement {
   box-sizing: border-box;
-
   height: 40px;
 
   padding: 10px 12px;
@@ -137,21 +138,40 @@ label {
 .StripeElement--webkit-autofill {
   background-color: #fefde5 !important;
 }
+
+table a {
+    color: white;
+}
+
 </style>
 </head>
 
 <body>
-    {% for item in food %}
-    <ul>
-        <li><span>{{ item.0.0 }}</span>  <span>{{ item.0.1 }}</span></li>
-        <a href="{% url 'delete' item.1 %}">Delete</a>
-
-    </ul>
-    {% endfor %}
-    <p>Total price is {{ price }}</p>
 
   <div class="wrapper" id="collapseStripe">
   <script src="https://js.stripe.com/v3/"></script>
+  <h3>Your order is:</h3>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Food</th>
+        <th>Price</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for item in food %}
+            <tr>
+              <td>{{ item.0.0 }}</td>
+              <td>{{ item.0.1 }}</td>
+              <td><a class="fa fa-trash fa-lg" href="{% url 'delete' item.1 %}"></a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+  <h4>Total price is {{ price }}</h4>
 
   <form action="{% url 'payments' %}" method="POST" id="payment-form">
       {% csrf_token %}
@@ -174,7 +194,7 @@ label {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-<script type="text/javascript" nonce="">    
+<script type="text/javascript" nonce="">
 // Create a Stripe client.
   var stripe = Stripe('pk_test_kcjuC8vQSujbOVcVPabfiLhq00iXw73glo');
 
