@@ -191,7 +191,7 @@ table a {
       <div id="card-errors" role="alert"></div>
     </div>
 
-    <button>Submit Payment</button>
+    <button id="submit-button">Submit Payment</button>
   </form>
   </div>
   <div id="stripe-token-handler" class="is-hidden">Success! Got token: <span class="token"></span></div>
@@ -252,9 +252,11 @@ table a {
         var errorElement = document.getElementById('card-errors');
         errorElement.textContent = result.error.message;
       } else {
+          var button = document.getElementById("submit-button")
         // confirm the payment
         var conf = confirm("Are you sure you want to pay {{ price }} ?")
         if (conf) {
+            button.innerText = 'Processing...';
             // Send the token to your server.
             stripeTokenHandler(result.token);
             // alert(result.token.id)
@@ -268,12 +270,15 @@ table a {
                 },
                 success: function () {
                     alert('Success!')
+                    button.innerText = 'Submit Payment';
                 }
             });
 
         } else {
-            alert("The payment is cancelled!")
+            alert("The payment is cancelled!");
+            button.innerText = 'Submit Payment';
         }
+        // button.innerText = 'Submit Payment';
 
       }
     });
