@@ -12,15 +12,18 @@
 
     {% for i in products %}
 
-    <div class="card mt-3">
-    <div class="card-body clearfix">
+    <div class="card mt-3 bg-transparent">
+    <div class="card-body clearfix bg-secondary">
         <img class="float-left" src="{{ i.photo.url }}" alt="">
-        <div class="card-content float-right">
+        <div class="card-content float-right bg-transparent">
             <h4>{{ i.titel }}</h4>
             <span>{{ i.description}}</span>
             <h4>$ {{ i.price}}</h4>
-            <form  action="" method="post">
-                    <input class="btn btn-primary button m-2" type="submit" value="Add to cart">
+            <form  action="{% url 'index' %}" method="post">
+                {% csrf_token %}
+                <input class="food" type="text" name="name" value="{{ i.titel }}">
+                <input class="food" type="text" name="price" value="{{ i.price}}">
+                <input class="btn btn-primary button m-2" type="submit" value="Add to cart">
             </form>
         </div>
     </div>

@@ -16,25 +16,17 @@ def index(request):
     if not request.user.is_authenticated:
         return render(request, "pizza/login.html", {"message":None})
 
-    items = [(str(i) + ", " + str(i.id)).split(', ')for i in Size.objects.all()]
-    menu = {}
-    for i in items:
-        if i[0] in menu:
-            menu[i[0]].append(i[1:])
-        else:
-            menu[i[0]] = [i[1:]]
-    # x = [(str(i) + ", " + str(i.id)).split(', ')for i in Size.objects.all()]
+
     products = Product.objects.all()
-    print(products)
-    for i in products:
-        print(i.photo)
     category = Type.objects.all()
-    #
-    # context = {
-    #     'items': menu.items(),
-    #     'toppings': Topping.objects.all(),
-    #     'user': request.user.is_authenticated,
-    # }
+    if request.method == "POST":
+        food = request.POST['name']
+        price = request.POST['price']
+        print(food, price)
+        cart = Order(item=food, user=request.user, price=price)
+        cart.save()
+        return HttpResponseRedirect(reverse("index"))
+
     context = {
         'category': category,
         'products': products
