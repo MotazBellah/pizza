@@ -16,7 +16,7 @@
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
-      <div class="container-fluid w-100 h-100">
+
           <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -28,6 +28,16 @@
               <li class="nav-item active">
                 <a class="nav-link" href="{% url 'carts' %}">Carts <span class="sr-only">(current)</span></a>
               </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Our Menu
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                      {% for i in category%}
+                        <a class="dropdown-item" href="{% url 'menus' i.id %}">{{ i }}</a>
+                      {% endfor %}
+                  </div>
+            </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 {% if request.user.is_authenticated%}
@@ -40,6 +50,7 @@
             </form>
           </div>
         </nav>
+    <div class="container-fluid w-100 h-100">
           {% block body %}{% endblock %}
      </div>
 
