@@ -29,6 +29,7 @@ body {
 
 .price {
     float: right;
+    width: 35%;
 }
 
 .right-side {
