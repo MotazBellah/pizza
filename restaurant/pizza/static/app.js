@@ -23,14 +23,16 @@ menu.addEventListener('click', (e) => {
         if (select1) {
             for (var i = 0; i < select1.length; i++) {
             if (select1.options[i].selected) {
-                selected1.push(select1.options[i].value);
+                if (select1.options[i].value !== 'Selected') {
+                    selected1.push(select1.options[i].value);
+                }
+
             }
         }
 
         }
 
-
-        console.log(selected1);
+        console.log(selected1.length);
         console.log(price);
         console.log(food);
         var check = true
