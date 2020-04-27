@@ -194,8 +194,8 @@ table a {
 
     <button id="submit-button">Submit Payment</button>
   </form>
-  <br><br>
-  <a  class="text-info" href="{% url 'index' %}"><h3>Back to our menu</h3></a>
+  <br><br><br>
+  <a  class="btn btn-warning" href="{% url 'index' %}"><h5>Back to our menu</h5></a>
   </div>
   <div id="stripe-token-handler" class="is-hidden">Success! Got token: <span class="token"></span></div>
 
@@ -228,6 +228,15 @@ table a {
     }
   };
 
+
+ // disabled the button if the price is 0, to prevent the user to click on it 
+  var button = document.getElementById("submit-button");
+  if ({{ price }} <= 0) {
+      button.disabled = true
+  } else {
+      button.disabled = false
+  }
+
   // Create an instance of the card Element.
   var card = elements.create('card', {style: style});
 
@@ -255,7 +264,7 @@ table a {
         var errorElement = document.getElementById('card-errors');
         errorElement.textContent = result.error.message;
       } else {
-          var button = document.getElementById("submit-button")
+          var button = document.getElementById("submit-button");
         // confirm the payment
         var conf = confirm("Are you sure you want to pay {{ price }} ?")
         if (conf) {
