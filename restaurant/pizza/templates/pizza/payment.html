@@ -154,6 +154,7 @@ table a {
 
 <body id="carts">
 
+
   <div class="wrapper" id="collapseStripe">
   <script src="https://js.stripe.com/v3/"></script>
   <h3>Your order is:</h3>
@@ -193,6 +194,8 @@ table a {
 
     <button id="submit-button">Submit Payment</button>
   </form>
+  <br><br>
+  <a  class="text-info" href="{% url 'index' %}"><h3>Back to our menu</h3></a>
   </div>
   <div id="stripe-token-handler" class="is-hidden">Success! Got token: <span class="token"></span></div>
 
