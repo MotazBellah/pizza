@@ -23,7 +23,8 @@ def index(request):
         food = request.POST['name']
         price = request.POST['price']
         print(food, price)
-        cart = Order(item=food, user=request.user, price=price)
+        item_type = Type.objects.get(name='Popular')
+        cart = Order(item=food, user=request.user, price=price, type=item_type)
         cart.save()
         return HttpResponseRedirect(reverse("index"))
 
@@ -157,6 +158,18 @@ def delete(request, item_id):
         return render(request, "pizza/login.html", {"message":None})
     delete_order = Order.objects.get(pk=item_id)
     delete_order.delete()
+
+    type = Type.objects.get(name='Subs')
+    get_subs = Order.objects.filter(type=type.id)
+
+    items_name = [i.item for i in get_subs if i.item != 'Extra Cheese on any sub']
+    extra_exsit = [i.item for i in get_subs if i.item == 'Extra Cheese on any sub']
+
+    print(items_name)
+    print(extra_exsit)
+    if extra_exsit and not items_name:
+        delete_order2 = Order.objects.get(item=extra_exsit[0])
+        delete_order2.delete()
 
     return HttpResponseRedirect(reverse("carts"))
 
