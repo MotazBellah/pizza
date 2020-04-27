@@ -4,19 +4,8 @@
 
 {% block content %}
     <div id="menu">
-        <div class="row align-items-center h-100 clearfix">
-            <div class="left-side">
-                <ul class="list-group">
-                    {% for i in category%}
-                        <li>
-                            <a href="{% url 'menus' i.id %}" class="bg-transparent list-group-item list-group-item-action"><h5>{{ i }}</h5></a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-
+        <div class="row align-items-center h-100">
             <div class="right-side">
-
 
             <ul class="col-md list-group list-group-flush bg-transparent">
                 {% for i in food %}
@@ -83,7 +72,9 @@
 
                         {% endif %}
                         <div class="price clearfix">
-                            <input class="small btn btn-secondary float-left" type="submit" title="Small" name="add1" value="{{i.small}}">
+                            {% if i.small %}
+                                <input class="small btn btn-secondary float-left" type="submit" title="Small" name="add1" value="{{i.small}}">
+                            {% endif %}
                             <input class="large btn btn-secondary float-right" type="submit" title="Large" name="add2" value="{{i.large}}">
                         </div>
                         </form>

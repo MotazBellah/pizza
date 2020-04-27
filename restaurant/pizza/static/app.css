@@ -24,14 +24,6 @@ body {
 }
 
 
-/* .home {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    box-sizing: border-box;
-} */
 
 .contain {
   width: 50%;
@@ -40,14 +32,6 @@ body {
   font-family: 'Oleo Script', cursive;
 }
 
-/* .home h1,
-.home h5,
-.home p,
-.home h4,
-.home span,
-.home h3 {
-    color: black;
-} */
 
 .card {
     width: 30%;
@@ -80,30 +64,24 @@ body {
 }
 
 .right-side {
-    float: right;
     width: 50%;
+    margin: 0 auto;
+    height: 100%;
     background-color: transparent;
     font-family: 'Satisfy', cursive;
     font-size: 1.2em;
 }
 
-.left-side {
-    float: left;
-    width: 20%;
-    margin-right: 5%;
-    background-color: transparent;
-    font-family: 'Caveat', cursive;
-    font-size: large;
+@media only screen and (max-width: 600px) {
+    .right-side {
+      width: 100%;
+    }
 }
+
+
 
 ul, li {
     background-color: transparent;
-}
-
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
 }
 
 
