@@ -15,7 +15,7 @@
 
                         <form id="{{i.id}}" class="add-to-carts bg-transparent">
                             {% csrf_token %}
-                            <input class="food bg-transparent" type="text" name="food" value="{{ i.menu.item }}">
+                            <input class="food bg-transparent" id='{{item_id}}'type="text" name="food" value="{{ i.menu.item }}">
                         {% if i.menu.item == '1 topping' %}
 
                             <select  class="topping form-control my-2 bg-transparent" name="topping1" required>
@@ -62,7 +62,7 @@
                         {% elif i.menu.item == '3 items' %}
 
                             <select class="topping form-control my-2 bg-transparent" id="three-item" multiple name="topping1" required>
-                            
+
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
                                 {% endfor %}

@@ -15,6 +15,7 @@ menu.addEventListener('click', (e) => {
         var form = e.target.parentNode.parentNode.id;
         var price = e.target.value
         var food = e.target.parentNode.parentNode.childNodes[3].value
+        var typeID = e.target.parentNode.parentNode.childNodes[3].id;
         console.log(e.target.parentNode.parentNode.childNodes);
         const select1 = e.target.parentNode.parentNode.childNodes[5]
 
@@ -27,7 +28,7 @@ menu.addEventListener('click', (e) => {
         }
 
         }
-
+        console.log(typeID);
         console.log(selected1.length);
         console.log(price);
         console.log(food);
@@ -55,6 +56,7 @@ menu.addEventListener('click', (e) => {
                         food: food,
                         add2: price,
                         topping1: selected1.toString(),
+                        id: typeID,
                         csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
                     },
                     success: function () {

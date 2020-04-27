@@ -46,7 +46,8 @@ def menus(request, item_id):
     context = {
         'food': [i[0] for i in food],
         'toppings': Topping.objects.all(),
-        'category': category
+        'category': category,
+        'item_id': item_id,
     }
         # return render(request, "pizza/index.html", context)
     return render(request, "pizza/menu.html", context)
@@ -56,6 +57,7 @@ def addFood(request):
     x = request.POST["food"]
     y = request.POST.getlist("add1")
     z = request.POST.getlist("add2")
+    type = request.POST["id"]
     topping_list = request.POST.getlist("topping1")
 
     # topping2 = request.POST.getlist("topping2")
@@ -63,6 +65,19 @@ def addFood(request):
     # item1 = request.POST.getlist("item1")
     # item2 = request.POST.getlist("item2")
     # item3 = request.POST.getlist("item3")
+    item_type = Type.objects.get(pk=type)
+    print(x)
+    if x == 'Extra Cheese on any sub':
+        items = Order.objects.filter(type=item_type)
+        items_name = [i.item for i in items if i.item != 'Extra Cheese on any sub']
+        extra_exsit = [i.item for i in items if i.item == 'Extra Cheese on any sub']
+        if  not items_name or extra_exsit:
+            print("TEST")
+            return HttpResponseRedirect(reverse("index"))
+
+
+
+    print(item_type)
     print(z)
     print(topping_list)
     # print(topping2)
@@ -74,13 +89,13 @@ def addFood(request):
 
     if x in ['1 topping', '1 item', '2 toppings', '2 items', '3 toppings', '3 items']:
         y = x +" (" +", ".join(topping_list) +')'
-        cart = Order(item=y, user=request.user, price=price)
+        cart = Order(item=y, user=request.user, price=price, type=item_type)
         cart.save()
         for t in topping_list[0].split(','):
             a = Topping.objects.get(item=t)
             cart.topping.add(a)
     else:
-        cart = Order(item=x, user=request.user, price=price)
+        cart = Order(item=x, user=request.user, price=price, type=item_type)
         cart.save()
 
     return HttpResponseRedirect(reverse("index"))

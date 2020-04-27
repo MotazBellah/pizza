@@ -36,12 +36,13 @@ class Topping(models.Model):
 
 class Order(models.Model):
     item = models.TextField()
+    type = models.ForeignKey(Type, on_delete=models.CASCADE, default=None)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     price = models.FloatField(default=0.0)
     topping = models.ManyToManyField(Topping, blank=True, related_name='topping')
 
     def __str__(self):
-        return f"{self.user}, {self.item}, {self.topping}, {self.price}"
+        return f"{self.user}, {self.type.name}, {self.item}, {self.topping}, {self.price}"
 
 
 
