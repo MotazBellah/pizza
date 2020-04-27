@@ -19,7 +19,6 @@
                         {% if i.menu.item == '1 topping' %}
 
                             <select  class="topping form-control my-2 bg-transparent" name="topping1" required>
-                            <option value="Selected" disabled selected>Select</option>
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
                                 {% endfor %}
@@ -28,7 +27,6 @@
                         {% elif i.menu.item == '2 toppings' %}
 
                             <select class="topping form-control my-2 bg-transparent" id="tw" multiple name="topping1" required>
-                                <option value="Selected" disabled selected>Select</option>
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
                                 {% endfor %}
@@ -37,7 +35,7 @@
                         {% elif i.menu.item == '3 toppings' %}
 
                             <select class="topping form-control my-2 bg-transparent" id="th" multiple name="topping1" required>
-                            <option value="Selected" disabled selected>Select</option>
+
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
                                 {% endfor %}
@@ -46,7 +44,7 @@
                         {% elif i.menu.item == '1 item' %}
 
                             <select class="topping form-control my-2 bg-transparent" name="topping1" required>
-                            <option value="Selected" disabled selected>Select</option>
+
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
                                 {% endfor %}
@@ -55,7 +53,7 @@
                         {% elif i.menu.item == '2 items' %}
 
                             <select class="topping form-control my-2 bg-transparent" id="two-item" multiple name="topping1" required>
-                            <option value="Selected" disabled selected>Select</option>
+
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
                                 {% endfor %}
@@ -64,7 +62,7 @@
                         {% elif i.menu.item == '3 items' %}
 
                             <select class="topping form-control my-2 bg-transparent" id="three-item" multiple name="topping1" required>
-                            <option value="Selected" disabled selected>Select</option>
+                            
                                 {% for i in toppings %}
                                     <option value="{{i.item}}">{{ i.item }}</option>
                                 {% endfor %}
