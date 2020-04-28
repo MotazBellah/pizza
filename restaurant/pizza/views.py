@@ -61,23 +61,9 @@ def addFood(request):
     type = request.POST["id"]
     topping_list = request.POST.getlist("topping1")
 
-    # topping2 = request.POST.getlist("topping2")
-    # topping3 = request.POST.getlist("topping3")
-    # item1 = request.POST.getlist("item1")
-    # item2 = request.POST.getlist("item2")
-    # item3 = request.POST.getlist("item3")
     item_type = Type.objects.get(pk=type)
-    print(x)
-    if x == 'Extra Cheese on any sub':
-        items = Order.objects.filter(type=item_type, user=request.user)
-        items_name = [i.item for i in items if i.item != 'Extra Cheese on any sub']
-        extra_exsit = [i.item for i in items if i.item == 'Extra Cheese on any sub']
-        if  not items_name or extra_exsit:
-            print("TEST")
-            return HttpResponseRedirect(reverse("index"))
 
-
-    add_ons = ['+ Mushrooms', '+ Green Peppers', '+ Onions']
+    add_ons = ['+ Mushrooms', '+ Green Peppers', '+ Onions', 'Extra Cheese on any sub']
     if x in add_ons:
         items = Order.objects.filter(type=item_type, user=request.user)
         subs = [i.item for i in items if i.item not in add_ons]
