@@ -69,13 +69,24 @@ def addFood(request):
     item_type = Type.objects.get(pk=type)
     print(x)
     if x == 'Extra Cheese on any sub':
-        items = Order.objects.filter(type=item_type)
+        items = Order.objects.filter(type=item_type, user=request.user)
         items_name = [i.item for i in items if i.item != 'Extra Cheese on any sub']
         extra_exsit = [i.item for i in items if i.item == 'Extra Cheese on any sub']
         if  not items_name or extra_exsit:
             print("TEST")
             return HttpResponseRedirect(reverse("index"))
 
+
+    add_ons = ['+ Mushrooms', '+ Green Peppers', '+ Onions']
+    if x in add_ons:
+        items = Order.objects.filter(type=item_type, user=request.user)
+        subs = [i.item for i in items if i.item not in add_ons]
+        for add in add_ons:
+            if x == add:
+                extra_add = [i.item for i in items if i.item == add]
+                if len(subs) <= len(extra_add):
+                    print("TEST")
+                    return HttpResponseRedirect(reverse("index"))
 
 
     print(item_type)
