@@ -157,16 +157,16 @@ def delete(request, item_id):
     delete_order.delete()
 
     type = Type.objects.get(name='Subs')
-    get_subs = Order.objects.filter(type=type.id)
+    get_subs = Order.objects.filter(type=type.id, user=request.user)
 
-    items_name = [i.item for i in get_subs if i.item != 'Extra Cheese on any sub']
-    extra_exsit = [i.item for i in get_subs if i.item == 'Extra Cheese on any sub']
-
-    print(items_name)
-    print(extra_exsit)
+    add_ons = ['+ Mushrooms', '+ Green Peppers', '+ Onions', 'Extra Cheese on any sub']
+    items_name = [i.item for i in get_subs if i.item not in add_ons]
+    extra_exsit = [i.item for i in get_subs if i.item in add_ons]
+    
     if extra_exsit and not items_name:
-        delete_order2 = Order.objects.get(item=extra_exsit[0])
-        delete_order2.delete()
+        for i in extra_exsit:
+            print(i)
+            Order.objects.filter(item=i, user=request.user).delete()
 
     return HttpResponseRedirect(reverse("carts"))
 
