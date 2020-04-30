@@ -10,6 +10,7 @@ menu.addEventListener('click', (e) => {
     selectionLimit(3, 'th');
     selectionLimit(2, 'two-item');
     selectionLimit(3, 'three-item');
+    selectionLimit(5, 'special');
 
     if (e.target.tagName === 'INPUT') {
         var form = e.target.parentNode.parentNode.id;
@@ -29,7 +30,7 @@ menu.addEventListener('click', (e) => {
 
         }
         console.log(typeID);
-        console.log(selected1.length);
+        console.log(selected1);
         console.log(price);
         console.log(food);
         var check = true
@@ -46,6 +47,11 @@ menu.addEventListener('click', (e) => {
                 }
                 if ((food=='3 toppings'||food=='3 items') && selected1.length < 3) {
                     alert("Please select 3 toppings")
+                    check = false;
+                    return
+                }
+                if (food=='Special' && selected1.length < 4) {
+                    alert("Please select 4 or 5 toppings")
                     check = false;
                     return
                 }

@@ -34,7 +34,9 @@
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                       {% for i in category%}
+                          {% if i.name != 'Popular' %}
                         <a class="dropdown-item" href="{% url 'menus' i.id %}">{{ i }}</a>
+                         {% endif %}
                       {% endfor %}
                   </div>
             </li>

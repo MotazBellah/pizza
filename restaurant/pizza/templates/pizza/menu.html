@@ -68,6 +68,14 @@
                                 {% endfor %}
                             </select>
 
+                            {% elif i.menu.item == 'Special' %}
+
+                                <select class="topping form-control my-2 bg-transparent" id="special" multiple name="topping1" required>
+
+                                    {% for i in toppings %}
+                                        <option value="{{i.item}}">{{ i.item }}</option>
+                                    {% endfor %}
+                                </select>
                         {% endif %}
                         <div class="price clearfix">
                             {% if i.small %}

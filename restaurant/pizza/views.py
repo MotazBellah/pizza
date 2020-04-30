@@ -85,7 +85,7 @@ def addFood(request):
     else:
         price = z[0]
 
-    if x in ['1 topping', '1 item', '2 toppings', '2 items', '3 toppings', '3 items']:
+    if x in ['1 topping', '1 item', '2 toppings', '2 items', '3 toppings', '3 items', 'Special']:
         y = x +" (" +", ".join(topping_list) +')'
         cart = Order(item=y, user=request.user, price=price, type=item_type)
         cart.save()
@@ -162,7 +162,7 @@ def delete(request, item_id):
     add_ons = ['+ Mushrooms', '+ Green Peppers', '+ Onions', 'Extra Cheese on any sub']
     items_name = [i.item for i in get_subs if i.item not in add_ons]
     extra_exsit = [i.item for i in get_subs if i.item in add_ons]
-    
+
     if extra_exsit and not items_name:
         for i in extra_exsit:
             print(i)
