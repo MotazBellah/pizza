@@ -229,7 +229,7 @@ table a {
   };
 
 
- // disabled the button if the price is 0, to prevent the user to click on it 
+ // disabled the button if the price is 0, to prevent the user to click on it
   var button = document.getElementById("submit-button");
   if ({{ price }} <= 0) {
       button.disabled = true
@@ -281,8 +281,9 @@ table a {
                     csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
                 },
                 success: function () {
-                    alert('Success!')
+                    alert('Success!');
                     button.innerText = 'Submit Payment';
+                    window.location.href = "{% url 'carts' %}"
                 }
             });
 
