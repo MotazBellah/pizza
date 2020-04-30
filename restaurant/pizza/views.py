@@ -104,7 +104,10 @@ def carts(request):
         return render(request, "pizza/login.html", {"message":None})
     shopping = Order.objects.filter(user=request.user)
     total_price = sum(float(i.price) for i in shopping)
-    food = [([i.item, i.price], i.id) for i in shopping]
+    food = [([i.item, i.price], i.id, i.type) for i in shopping]
+    for i in shopping:
+        print(i.type)
+        print(i.topping)
 
     context = {
         'food': food,
