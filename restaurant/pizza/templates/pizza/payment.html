@@ -80,7 +80,7 @@ label {
 }
 
 .wrapper {
-  width: 50%;
+  width: 60%;
   margin: 0 auto;
   height: 100%;
 }
@@ -164,6 +164,7 @@ table a {
       <tr>
         <th>Category</th>
         <th>Food</th>
+        <th>Add-ons</th>
         <th>Price</th>
         <th>Delete</th>
       </tr>
@@ -171,10 +172,11 @@ table a {
     <tbody>
         {% for item in food %}
             <tr>
-              <td>{{ item.2 }}</td>
-              <td>{{ item.0.0 }}</td>
-              <td>{{ item.0.1 }}</td>
-              <td><a class="fa fa-trash fa-lg" href="{% url 'delete' item.1 %}"></a></td>
+              <td>{{ item.type }}</td>
+              <td>{{ item.item }}</td>
+              <td>{{ item.topping.all|join:", " }}</td>
+              <td>{{ item.price }}</td>
+              <td><a class="fa fa-trash fa-lg" href="{% url 'delete' item.id %}"></a></td>
             </tr>
         {% endfor %}
     </tbody>

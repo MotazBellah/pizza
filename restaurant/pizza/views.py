@@ -85,9 +85,10 @@ def addFood(request):
     else:
         price = z[0]
 
+
     if x in ['1 topping', '1 item', '2 toppings', '2 items', '3 toppings', '3 items', 'Special']:
-        y = x +" (" +", ".join(topping_list) +')'
-        cart = Order(item=y, user=request.user, price=price, type=item_type)
+        # y = x +" (" +", ".join(topping_list) +')'
+        cart = Order(item=x, user=request.user, price=price, type=item_type)
         cart.save()
         for t in topping_list[0].split(','):
             a = Topping.objects.get(item=t)
@@ -104,13 +105,15 @@ def carts(request):
         return render(request, "pizza/login.html", {"message":None})
     shopping = Order.objects.filter(user=request.user)
     total_price = sum(float(i.price) for i in shopping)
-    food = [([i.item, i.price], i.id, i.type) for i in shopping]
-    for i in shopping:
-        print(i.type)
-        print(i.topping)
+    # food = [([i.item, i.price], i.id, i.type) for i in shopping]
+    # for i in shopping:
+    #     for topping in i.topping.all():
+    #         print(topping)
+    #     print(i.type)
+    #     print(i.topping)
 
     context = {
-        'food': food,
+        'food': shopping,
         'price': round(total_price, 2),
 
     }
