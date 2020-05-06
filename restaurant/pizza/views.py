@@ -9,6 +9,39 @@ from django.views.decorators.csrf import csrf_protect
 from django.core.mail import send_mail
 import stripe
 
+import sendgrid
+import os
+from sendgrid.helpers.mail import *
+
+def send_email_SendGrid(user_email, message):
+    print('//////////////////////////////////')
+    print(os.environ.get('SENDGRID_KEY'))
+    print('//////////////////////////////////')
+    sg = sendgrid.SendGridAPIClient(os.environ.get('SENDGRID_KEY'))
+    data = {
+      "personalizations": [
+        {
+          "to": [
+            {
+              "email": "{}".format(user_email)
+            }
+          ],
+          "subject": "Hello from the Pizza Online Order!"
+        }
+      ],
+      "from": {
+        "email": "moataz.ghobashi@gmail.com"
+      },
+      "content": [
+        {
+          "type": "text/plain",
+          "value": "{}".format(message)
+        }
+      ]
+    }
+    response = sg.client.mail.send.post(request_body=data)
+
+
 # Create your views here.
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -24,6 +57,8 @@ def index(request):
         price = request.POST['price']
         print(food, price)
         item_type = Type.objects.get(name='Popular')
+        print('//////////////////')
+        print(item_type)
         cart = Order(item=food, user=request.user, price=price, type=item_type)
         cart.save()
         return HttpResponseRedirect(reverse("index"))
@@ -125,33 +160,38 @@ def payments(request):
 
     shopping = Order.objects.filter(user=request.user)
     total_price = sum(float(i.price) for i in shopping)
-    email_message = ''
+    email_message = 'Please find your order below: \n\n'
 
     if request.method == "POST":
         print(request.user.email)
-        token = request.POST.get('token', False)
-        print(token)
+        try:
+            token = request.POST.get('token', False)
+            print(token)
 
-        pay = stripe.Charge.create(
-          amount=int(round(total_price, 2) * 100),
-          currency="usd",
-          source=token,
-          description=request.user.email,
-        )
+            pay = stripe.Charge.create(
+              amount=int(round(total_price, 2) * 100),
+              currency="usd",
+              source=token,
+              description=request.user.email,
+            )
+        except Exception as e:
+            print(e)
+            return HttpResponseRedirect(reverse("carts"))
+
 
         for i in shopping:
             Purchase(order=i.item, user=request.user, price=i.price).save()
             email_message += i.item + "  " + str(i.price) + '\n'
 
         email_message += 'Total price is {}'.format(str(total_price))
+        Order.objects.filter(user=request.user).delete()
     # print(email_message)
 
-        subject = "YOUR ORDER"
-        from_email = settings.EMAIL_HOST_USER
-        to_list = [request.user.email,]
-        send_mail(subject, email_message, from_email, to_list, fail_silently=False)
-
-        Order.objects.filter(user=request.user).delete()
+        try:
+            send_email_SendGrid(request.user.email, email_message)
+        except Exception as e:
+            print(e)
+            pass
 
         return HttpResponseRedirect(reverse("carts"))
 
