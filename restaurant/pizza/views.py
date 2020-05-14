@@ -164,20 +164,15 @@ def payments(request):
 
     if request.method == "POST":
         print(request.user.email)
-        try:
-            token = request.POST.get('token', False)
-            print(token)
+        token = request.POST.get('token', False)
+        print(token)
 
-            pay = stripe.Charge.create(
+        pay = stripe.Charge.create(
               amount=int(round(total_price, 2) * 100),
               currency="usd",
               source=token,
               description=request.user.email,
-            )
-        except Exception as e:
-            print(e)
-            return HttpResponseRedirect(reverse("carts"))
-
+        )
 
         for i in shopping:
             Purchase(order=i.item, user=request.user, price=i.price).save()

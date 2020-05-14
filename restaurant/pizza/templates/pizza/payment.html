@@ -288,6 +288,14 @@ table a {
                     alert('Success!');
                     button.innerText = 'Submit Payment';
                     window.location.href = "{% url 'carts' %}"
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // console.log(errorThrown);
+                    // console.log(textStatus);
+                    // console.log(jqXHR);
+                    alert('Unsuccessful payment,some thing went wrong :(');
+                    button.innerText = 'Submit Payment';
+                    window.location.href = "{% url 'carts' %}"
                 }
             });
 
