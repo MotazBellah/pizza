@@ -13,9 +13,8 @@
     {% for i in products %}
 
     <div class="card mt-3 bg-transparent">
-    <div class="card-body clearfix bg-secondary">
-        <img class="float-left" src="{{ i.photo.url }}" alt="">
-        <div class="card-content float-right bg-transparent">
+    <div class="card-body bg-secondary">
+        <div class="card-content bg-transparent">
             <h4>{{ i.titel }}</h4>
             <span>{{ i.description}}</span>
             <h4>$ {{ i.price}}</h4>

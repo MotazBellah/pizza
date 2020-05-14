@@ -20,7 +20,7 @@
 
                             <select  class="topping form-control my-2 bg-transparent" name="topping1" required>
                                 {% for i in toppings %}
-                                    <option value="{{i.item}}">{{ i.item }}</option>
+                                    <option class="bg-info" value="{{i.item}}">{{ i.item }}</option>
                                 {% endfor %}
                             </select>
 
@@ -46,7 +46,7 @@
                             <select class="topping form-control my-2 bg-transparent" name="topping1" required>
 
                                 {% for i in toppings %}
-                                    <option value="{{i.item}}">{{ i.item }}</option>
+                                    <option class="bg-info" value="{{i.item}}">{{ i.item }}</option>
                                 {% endfor %}
                             </select>
 
