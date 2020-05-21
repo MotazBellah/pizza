@@ -11,23 +11,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-# from .email_info import *
-
-# EMAIL_USE_TLS = EMAIL_USE_TLS
-# EMAIL_USE_SSL = EMAIL_USE_SSL
-# EMAIL_BACKEND = EMAIL_BACKEND
-# EMAIL_HOST = EMAIL_HOST
-# EMAIL_HOST_USER = EMAIL_HOST_USER
-# EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
-# EMAIL_PORT = EMAIL_PORT
-
-# SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
-#
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_HOST_USER = 'apikey'
-# EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -161,55 +144,18 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-
-# SOCIALACCOUNT_PROVIDERS = {
-#     'facebook': {
-#         'METHOD': 'oauth2',
-#         'SCOPE': ['email','public_profile'],
-#         'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-#         'FIELDS': [
-#             'id',
-#             'email',
-#             'name',
-#             'first_name',
-#             'last_name'],
-#         'EXCHANGE_TOKEN': True,
-#         'LOCALE_FUNC': lambda request: 'kr_KR',
-#         'VERIFIED_EMAIL': False,
-#         'VERSION': 'v6.0'}
-#         }
-
-
-# #facebook
-# SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('FACEBOOK_KEY')  # App ID
-# SOCIAL_AUTH_FACEBOOK_SECRET =os.environ.get('SENDGRID_KEY') #app key
-#
-# # SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
-# # SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-# #     'fields': 'id, name, email, age_range',
-# # }
-# # SOCIAL_AUTH_FACEBOOK_AUTH_EXTRA_ARGUMENTS = {
-# #     'auth_type': 'reauthenticate',
-# # }
-# # SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
-# # SOCIAL_AUTH_FACEBOOK_API_VERSION = '2.10'
-#
-# # ACCOUNT_EMAIL_REQUIRED=True
-# ACCOUNT_USERNAME_REQURIED=False
-
 SITE_ID = 2
 
-# LOGIN_URL = 'signin'
+# Facebook
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-# LOGOUT_URL = 'signout'
-# LOGOUT_REDIRECT_URL = 'signin'
 
-STRIPE_SECRET_KEY = 'sk_test_mhZnMzAqoxRxzn6MMjz2heVv00I2kRo0nf'
-STRIPE_PUBLISHABLE_KEY = 'pk_test_kcjuC8vQSujbOVcVPabfiLhq00iXw73glo'
+# Stripe API
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
 
 
-CELERY_BROKER_URL = 'redis://h:pf6992483732c33c2e99ab27f18ce59bd6963a27bbdd3722e42aa5b8c7125e94e@ec2-3-86-75-248.compute-1.amazonaws.com:24249'
+CELERY_BROKER_URL = os.environ.get('REDIS_URL')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER ='json'
