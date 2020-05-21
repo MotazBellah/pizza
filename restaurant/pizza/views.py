@@ -13,6 +13,9 @@ import sendgrid
 import os
 from sendgrid.helpers.mail import *
 
+xxxx = os.environ.get('FACEBOOK_KEY')  # App ID
+yyyy =os.environ.get('SENDGRID_KEY') #app key
+
 def send_email_SendGrid(user_email, message):
     print('//////////////////////////////////')
     print(os.environ.get('SENDGRID_KEY'))
@@ -140,6 +143,10 @@ def carts(request):
         return render(request, "pizza/login.html", {"message":None})
     shopping = Order.objects.filter(user=request.user)
     total_price = sum(float(i.price) for i in shopping)
+    print("***********************************request.user.email******************************")
+    print(request.user.email)
+    print(request.user)
+    print("***********************************request.user.email******************************")
     # food = [([i.item, i.price], i.id, i.type) for i in shopping]
     # for i in shopping:
     #     for topping in i.topping.all():

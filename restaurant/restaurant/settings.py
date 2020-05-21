@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-from .email_info import *
+# from .email_info import *
 
 # EMAIL_USE_TLS = EMAIL_USE_TLS
 # EMAIL_USE_SSL = EMAIL_USE_SSL
@@ -40,7 +40,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ql50%u@#w66xrh$_)uk&sfv&uw0@cihddk+r08$pdkyn$1@0gk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['online-pizza-order.herokuapp.com', 'localhost']
 
@@ -161,9 +161,50 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+
+# SOCIALACCOUNT_PROVIDERS = {
+#     'facebook': {
+#         'METHOD': 'oauth2',
+#         'SCOPE': ['email','public_profile'],
+#         'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+#         'FIELDS': [
+#             'id',
+#             'email',
+#             'name',
+#             'first_name',
+#             'last_name'],
+#         'EXCHANGE_TOKEN': True,
+#         'LOCALE_FUNC': lambda request: 'kr_KR',
+#         'VERIFIED_EMAIL': False,
+#         'VERSION': 'v6.0'}
+#         }
+
+
+# #facebook
+# SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('FACEBOOK_KEY')  # App ID
+# SOCIAL_AUTH_FACEBOOK_SECRET =os.environ.get('SENDGRID_KEY') #app key
+#
+# # SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+# # SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+# #     'fields': 'id, name, email, age_range',
+# # }
+# # SOCIAL_AUTH_FACEBOOK_AUTH_EXTRA_ARGUMENTS = {
+# #     'auth_type': 'reauthenticate',
+# # }
+# # SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
+# # SOCIAL_AUTH_FACEBOOK_API_VERSION = '2.10'
+#
+# # ACCOUNT_EMAIL_REQUIRED=True
+# ACCOUNT_USERNAME_REQURIED=False
+
 SITE_ID = 2
 
+# LOGIN_URL = 'signin'
 LOGIN_REDIRECT_URL = '/'
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+# LOGOUT_URL = 'signout'
+# LOGOUT_REDIRECT_URL = 'signin'
 
 STRIPE_SECRET_KEY = 'sk_test_mhZnMzAqoxRxzn6MMjz2heVv00I2kRo0nf'
 STRIPE_PUBLISHABLE_KEY = 'pk_test_kcjuC8vQSujbOVcVPabfiLhq00iXw73glo'
