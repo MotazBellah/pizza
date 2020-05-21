@@ -40,7 +40,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ql50%u@#w66xrh$_)uk&sfv&uw0@cihddk+r08$pdkyn$1@0gk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['online-pizza-order.herokuapp.com', 'localhost']
 
