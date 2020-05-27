@@ -60,7 +60,7 @@ menu.addEventListener('click', (e) => {
                     url: '/addFood',
                     data: {
                         food: food,
-                        add2: price,
+                        price: price,
                         topping1: selected1.toString(),
                         id: typeID,
                         csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()

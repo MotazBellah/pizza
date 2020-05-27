@@ -1,110 +1,37 @@
 {% extends "pizza/layout.html" %}
+{% load static %}
 
 {% block title %}Pizza{% endblock %}
 
-{% block body %}
-    <h1>Pizza</h1>
-    <div id="menu">
-        <div class="row">
-
-            {% for item in items %}
-
-            <ul class="col-md list-group list-group-flush">
-                <h3>{{item.0}}</h3>
-                <h2>{{ item.1 | length}}</h2>
-                {% for i in item.1 %}
-                    <!-- <p>{{ len.item.1 }}</p> -->
-                    <li class="list-group-item">
-                        <input class="food" type="checkbox" name="food" value="{{i.0}}">
-                        <span class="food-type">{{i.0}}</span>
-
-                        <!-- <form class="" action="{% url 'addFood' %}" method="post"> -->
-                        <form id="{{i.3}}" class="add-to-carts" >
-
-                        {% csrf_token %}
-
-
-                            <input class="food" type="text" name="food" value="{{i.0}}">
-
-
-                        {% if i.0 == '1 topping' %}
-
-                            <select  class="topping form-control my-2" name="topping1" required>
-                            <option value="Selected" disabled selected>Select</option>
-                                {% for i in toppings %}
-                                    <option value="{{i.item}}">{{ i.item }}</option>
-                                {% endfor %}
-                            </select>
-
-                        {% elif i.0 == '2 toppings' %}
-
-                            <select class="topping form-control my-2" id="tw" multiple name="topping1" required>
-                                <option value="Selected" disabled selected>Select</option>
-                                {% for i in toppings %}
-                                    <option value="{{i.item}}">{{ i.item }}</option>
-                                {% endfor %}
-                            </select>
-
-                        {% elif i.0 == '3 toppings' %}
-
-                            <select class="topping form-control my-2" id="th" multiple name="topping1" required>
-                            <option value="Selected" disabled selected>Select</option>
-                                {% for i in toppings %}
-                                    <option value="{{i.item}}">{{ i.item }}</option>
-                                {% endfor %}
-                            </select>
-
-                        {% elif i.0 == '1 item' %}
-
-                            <select class="topping form-control my-2" name="topping1" required>
-                            <option value="Selected" disabled selected>Select</option>
-                                {% for i in toppings %}
-                                    <option value="{{i.item}}">{{ i.item }}</option>
-                                {% endfor %}
-                            </select>
-
-                        {% elif i.0 == '2 items' %}
-
-                            <select class="topping form-control my-2" id="two-item" multiple name="topping1" required>
-                            <option value="Selected" disabled selected>Select</option>
-                                {% for i in toppings %}
-                                    <option value="{{i.item}}">{{ i.item }}</option>
-                                {% endfor %}
-                            </select>
-
-                        {% elif i.0 == '3 items' %}
-
-                            <select class="topping form-control my-2" id="three-item" multiple name="topping1" required>
-                            <option value="Selected" disabled selected>Select</option>
-                                {% for i in toppings %}
-                                    <option value="{{i.item}}">{{ i.item }}</option>
-                                {% endfor %}
-                            </select>
-
-                        {% endif %}
-                        <div class="price btn-group btn-group-sm">
-                            <input class="small btn btn-outline-info" type="submit" title="Small" name="add1" value="{{i.1}}">
-                            <input class="large btn btn-outline-info" type="submit" title="Large" name="add2" value="{{i.2}}">
-                        </div>
-                        </form>
-
-                    </li>
-                {% endfor %}
-
-            </ul>
-            {% endfor %}
-            </div>
-
-            <!-- <select  name="topping">
-                <option value="Select">Select</option>
-                {% for i in toppings %}
-                    <option value="{{i.item}}">{{ i.item }}</option>
-                {% endfor %}
-            </select> -->
-            <!-- <input id='carts' type="submit" value="Order"/> -->
-        <!-- </form> -->
-
-
-
+{% block content %}
+<div class="home">
+    <div class="contain mt-3">
+        <h1>Welcom to Online Pizza</h1>
+        <h3>Our Today's Offers</h3>
     </div>
+
+    {% for i in products %}
+
+    <div class="card mt-3 bg-transparent">
+    <div class="card-body bg-secondary">
+        <div class="card-content bg-transparent">
+            <h4>{{ i.titel }}</h4>
+            <span>{{ i.description}}</span>
+            <h4>$ {{ i.price}}</h4>
+            <form  action="{% url 'index' %}" method="post">
+                {% csrf_token %}
+                <input class="food" type="text" name="name" value="{{ i.titel }}">
+                <input class="food" type="text" name="price" value="{{ i.price}}">
+                <input class="btn btn-primary button m-2" type="submit" value="Add to cart">
+            </form>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+</div>
+
+
+
 {% endblock %}
